@@ -35,6 +35,50 @@
             --radius-lg: 24px;
         }
 
+        /* Subtle Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -294,12 +338,19 @@
         .hero-image {
             position: relative;
             z-index: 10;
+            animation: float 5s ease-in-out infinite;
         }
 
         .hero-image img {
             width: 100%;
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
         }
 
         .success-msg {
@@ -475,11 +526,22 @@
             border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow-lg);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .solution-image:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2);
         }
 
         .solution-image img {
             width: 100%;
             display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .solution-image:hover img {
+            transform: scale(1.05);
         }
 
         .solution-content h3 {
@@ -1296,14 +1358,14 @@
                     <span data-lang="en">Coming Soon</span>
                 </div>
                 <h1>
-                    <span data-lang="ko" class="active">AI가 찾아주는<br><span class="gradient-text">나와 딱 맞는 사람</span></span>
-                    <span data-lang="ja">AIが見つける<br><span class="gradient-text">あなたにぴったりの人</span></span>
-                    <span data-lang="en">AI finds<br><span class="gradient-text">your perfect match</span></span>
+                    <span data-lang="ko" class="active">스와이프는 그만,<br><span class="gradient-text">운명 같은 만남</span></span>
+                    <span data-lang="ja">スワイプはもう終わり、<br><span class="gradient-text">運命のような出会い</span></span>
+                    <span data-lang="en">Stop swiping,<br><span class="gradient-text">start connecting</span></span>
                 </h1>
                 <p class="hero-desc">
-                    <span data-lang="ko" class="active">끝없는 스와이프는 이제 그만. 당신의 AI 에이전트가 대화 스타일부터 가치관, 유머 감각까지 분석해서 진짜 맞는 한 사람을 찾아드려요.</span>
-                    <span data-lang="ja">終わりのないスワイプはもう終わり。あなたのAIエージェントが会話スタイルから価値観、ユーモアセンスまで分析して、本当に合う一人を見つけます。</span>
-                    <span data-lang="en">No more endless swiping. Your AI agent analyzes your conversation style, values, and humor to find someone who truly gets you.</span>
+                    <span data-lang="ko" class="active">사진 몇 장으로 사람을 판단하는 시대는 끝났어요. AI가 당신의 유머 코드, 대화 리듬, 삶의 가치관까지 읽어서 진짜 결이 맞는 단 한 사람을 찾아드려요.</span>
+                    <span data-lang="ja">写真数枚で人を判断する時代は終わりました。AIがあなたのユーモアコード、会話のリズム、人生の価値観まで読み取って、本当に相性の良いたった一人を見つけます。</span>
+                    <span data-lang="en">Judging people by a few photos is over. AI reads your humor, conversation rhythm, and life values to find the one person who truly gets you.</span>
                 </p>
                 <form class="hero-form" id="heroForm">
                     <input type="email" class="hero-input" required id="heroEmail">
@@ -1402,31 +1464,31 @@
                     <span data-lang="en">The Solution</span>
                 </p>
                 <h2 class="section-title">
-                    <span data-lang="ko" class="active">MatchHz는 다르게 작동합니다</span>
-                    <span data-lang="ja">MatchHzは違う方法で動きます</span>
-                    <span data-lang="en">MatchHz works differently</span>
+                    <span data-lang="ko" class="active">데이팅 앱은 잊으세요</span>
+                    <span data-lang="ja">デートアプリは忘れてください</span>
+                    <span data-lang="en">Forget dating apps</span>
                 </h2>
                 <p class="section-desc">
-                    <span data-lang="ko" class="active">외모가 아닌 '주파수'로 매칭합니다. 대화 스타일, 유머 감각, 가치관 — 눈에 보이지 않지만 관계에서 가장 중요한 것들.</span>
-                    <span data-lang="ja">外見ではなく「周波数」でマッチング。会話スタイル、ユーモアセンス、価値観 — 目には見えないけど、関係で最も重要なもの。</span>
-                    <span data-lang="en">We match on 'frequency', not photos. Conversation style, humor, values — invisible but essential to real relationships.</span>
+                    <span data-lang="ko" class="active">MatchHz는 당신과 '결이 맞는' 사람을 찾습니다. 같은 농담에 웃고, 비슷한 침묵도 편안하고, 대화가 자연스럽게 흘러가는 — 그런 사람이요.</span>
+                    <span data-lang="ja">MatchHzはあなたと「気が合う」人を見つけます。同じ冗談で笑い、同じ沈黙も心地よく、会話が自然に流れる — そんな人を。</span>
+                    <span data-lang="en">MatchHz finds someone you 'vibe' with. Someone who laughs at the same jokes, feels comfortable in the same silences, and conversations just flow.</span>
                 </p>
             </div>
 
             <div class="solution-grid">
                 <div class="solution-image">
-                    <img src="images/matching-visual.png" alt="Smart Matching">
+                    <img src="images/data-connection.png" alt="Smart Matching">
                 </div>
                 <div class="solution-content">
                     <h3>
-                        <span data-lang="ko" class="active">300가지 이상의 호환성 분석</span>
-                        <span data-lang="ja">300以上の互換性分析</span>
-                        <span data-lang="en">300+ compatibility factors analyzed</span>
+                        <span data-lang="ko" class="active">300가지 이유로 연결되는 인연</span>
+                        <span data-lang="ja">300の理由でつながる縁</span>
+                        <span data-lang="en">300 reasons you'll click</span>
                     </h3>
                     <p>
-                        <span data-lang="ko" class="active">단순히 "좋아하는 것"을 묻지 않습니다. 자연스러운 대화를 통해 당신의 말투, 반응 속도, 유머 스타일, 감정 표현 방식까지 분석합니다.</span>
-                        <span data-lang="ja">単に「好きなもの」を聞くのではありません。自然な会話を通じて、あなたの話し方、反応速度、ユーモアスタイル、感情表現方法まで分析します。</span>
-                        <span data-lang="en">We don't just ask what you like. Through natural conversation, we analyze your speech patterns, response time, humor style, and emotional expression.</span>
+                        <span data-lang="ko" class="active">"좋아하는 음식이 뭐예요?" 같은 질문은 하지 않아요. 자연스러운 대화 속에서 당신의 유머 코드, 감정 표현 방식, 정치 성향까지 — 진짜 중요한 것들을 읽어냅니다.</span>
+                        <span data-lang="ja">「好きな食べ物は？」のような質問はしません。自然な会話の中で、あなたのユーモアコード、感情表現方法、価値観まで — 本当に大切なものを読み取ります。</span>
+                        <span data-lang="en">We don't ask "what's your favorite food?" Through natural conversation, we read your humor code, emotional expression, values — the stuff that actually matters.</span>
                     </p>
                     <ul class="solution-features">
                         <li>
@@ -1456,7 +1518,7 @@
 
             <div class="solution-grid reverse">
                 <div class="solution-image">
-                    <img src="images/first-date.png" alt="Perfect First Date">
+                    <img src="images/music-laugh.png" alt="Perfect First Date">
                 </div>
                 <div class="solution-content">
                     <h3>
@@ -1497,7 +1559,7 @@
 
             <div class="solution-grid">
                 <div class="solution-image">
-                    <img src="images/couple-park.png" alt="Real Connection">
+                    <img src="images/cafe-connection.png" alt="Real Connection">
                 </div>
                 <div class="solution-content">
                     <h3>
