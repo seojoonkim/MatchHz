@@ -149,17 +149,72 @@
             gap: 24px;
         }
 
-        .lang-switch {
-            display: flex;
-            background: var(--bg);
-            padding: 4px;
-            border-radius: 10px;
+        .lang-dropdown {
+            position: relative;
         }
 
-        .lang-btn {
+        .lang-selected {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             padding: 8px 14px;
             font-size: 13px;
             font-weight: 600;
+            background: var(--bg);
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .lang-selected:hover {
+            background: var(--bg-alt);
+        }
+
+        .lang-selected::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid var(--text-light);
+            transition: transform 0.2s;
+        }
+
+        .lang-dropdown.open .lang-selected::after {
+            transform: rotate(180deg);
+        }
+
+        .lang-options {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            padding: 8px;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s;
+            z-index: 100;
+        }
+
+        .lang-dropdown.open .lang-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 500;
             background: transparent;
             border: none;
             color: var(--text-light);
@@ -167,12 +222,17 @@
             border-radius: 8px;
             transition: all 0.2s;
             font-family: inherit;
+            text-align: left;
         }
 
-        .lang-btn.active {
-            background: var(--white);
+        .lang-option:hover {
+            background: var(--bg);
             color: var(--text);
-            box-shadow: var(--shadow-sm);
+        }
+
+        .lang-option.active {
+            background: var(--gradient-light);
+            color: var(--primary);
         }
 
         .nav-cta {
@@ -1328,10 +1388,13 @@
         <div class="container">
             <div class="logo">Match<span>Hz</span></div>
             <div class="nav-right">
-                <div class="lang-switch">
-                    <button class="lang-btn active" data-lang-btn="ko">한국어</button>
-                    <button class="lang-btn" data-lang-btn="ja">日本語</button>
-                    <button class="lang-btn" data-lang-btn="en">EN</button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-selected" id="langSelected">EN</button>
+                    <div class="lang-options">
+                        <button class="lang-option" data-lang-btn="ko">🇰🇷 한국어</button>
+                        <button class="lang-option" data-lang-btn="ja">🇯🇵 日本語</button>
+                        <button class="lang-option active" data-lang-btn="en">🇺🇸 English</button>
+                    </div>
                 </div>
                 <button class="nav-cta" onclick="scrollTo('#cta')">
                     <span data-lang="ko" class="active">사전 등록</span>
@@ -1919,10 +1982,18 @@
     </footer>
 
     <script>
-        // Language
-        const langBtns = document.querySelectorAll('.lang-btn');
+        // Language Dropdown
+        const langDropdown = document.getElementById('langDropdown');
+        const langSelected = document.getElementById('langSelected');
+        const langOptions = document.querySelectorAll('.lang-option');
         const langElements = document.querySelectorAll('[data-lang]');
         const inputs = document.querySelectorAll('.hero-input');
+
+        const langLabels = {
+            ko: '🇰🇷 한국어',
+            ja: '🇯🇵 日本語',
+            en: '🇺🇸 EN'
+        };
 
         const placeholders = {
             ko: '이메일 주소',
@@ -1931,16 +2002,29 @@
         };
 
         function setLanguage(lang) {
-            langBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.langBtn === lang));
+            langOptions.forEach(btn => btn.classList.toggle('active', btn.dataset.langBtn === lang));
             langElements.forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
             inputs.forEach(input => input.placeholder = placeholders[lang]);
+            langSelected.textContent = langLabels[lang];
             document.documentElement.lang = lang;
+            langDropdown.classList.remove('open');
         }
 
-        langBtns.forEach(btn => {
+        // Toggle dropdown
+        langSelected.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('open');
+        });
+
+        // Select language
+        langOptions.forEach(btn => {
             btn.addEventListener('click', () => setLanguage(btn.dataset.langBtn));
         });
 
+        // Close on outside click
+        document.addEventListener('click', () => langDropdown.classList.remove('open'));
+
+        // Auto-detect browser/OS language
         const browserLang = navigator.language.slice(0, 2);
         if (['ko', 'ja'].includes(browserLang)) setLanguage(browserLang);
         else setLanguage('en');
