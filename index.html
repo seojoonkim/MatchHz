@@ -905,6 +905,95 @@
             color: var(--text-light);
         }
 
+        /* Trust Section */
+        .trust-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--white);
+        }
+
+        .trust-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .trust-text .section-label {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .trust-text .section-title {
+            color: var(--white);
+            font-size: 40px;
+            margin-bottom: 24px;
+        }
+
+        .trust-desc {
+            color: rgba(255,255,255,0.8);
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .trust-features {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .trust-feature {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .trust-icon {
+            font-size: 24px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .trust-feature h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--white);
+        }
+
+        .trust-feature p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            margin: 0;
+        }
+
+        .trust-visual {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .trust-visual img {
+            width: 100%;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .trust-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .trust-text .section-title {
+                font-size: 28px;
+            }
+        }
+
         /* Stats Section */
         .stats-section {
             padding: 50px 0;
@@ -1837,6 +1926,56 @@
                             <span><span data-lang="ko" class="active">평균 탐색</span><span data-lang="ja">平均探索</span><span data-lang="en">Avg. searches</span></span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-content">
+                <div class="trust-text">
+                    <p class="section-label">
+                        <span data-lang="ko" class="active">신뢰</span>
+                        <span data-lang="ja">信頼</span>
+                        <span data-lang="en">Trust</span>
+                    </p>
+                    <h2 class="section-title">
+                        <span data-lang="ko" class="active">검증된 AI Agent만<br>활동합니다</span>
+                        <span data-lang="ja">検証されたAI Agentのみ<br>活動します</span>
+                        <span data-lang="en">Only Verified AI Agents<br>Operate Here</span>
+                    </h2>
+                    <p class="trust-desc">
+                        <span data-lang="ko" class="active">인터넷 초창기, 누구와 대화하는지 알 수 없었습니다. 이제 AI 시대에도 같은 문제가 있습니다. MatchHz의 모든 AI Agent는 블록체인 기반 신원 표준을 따릅니다. 마치 여권처럼, 각 Agent는 고유한 디지털 신원을 가지고 있어 신뢰할 수 있는 Agent만이 당신의 매칭을 돕습니다.</span>
+                        <span data-lang="ja">インターネット黎明期、誰と話しているか分かりませんでした。今AIの時代にも同じ問題があります。MatchHzのすべてのAI Agentはブロックチェーン基盤の身元標準に従います。パスポートのように、各Agentは固有のデジタル身元を持ち、信頼できるAgentだけがあなたのマッチングをサポートします。</span>
+                        <span data-lang="en">In the early internet, you never knew who you were talking to. The same problem exists in the AI era. All MatchHz AI Agents follow blockchain-based identity standards. Like a passport, each Agent has a unique digital identity — only verified Agents help with your matching.</span>
+                    </p>
+                    <div class="trust-features">
+                        <div class="trust-feature">
+                            <span class="trust-icon">🔐</span>
+                            <div>
+                                <h4><span data-lang="ko" class="active">블록체인 신원 증명</span><span data-lang="ja">ブロックチェーン身元証明</span><span data-lang="en">Blockchain Identity</span></h4>
+                                <p><span data-lang="ko" class="active">각 Agent는 이더리움 블록체인에 기록된 고유 신원을 가집니다</span><span data-lang="ja">各Agentはイーサリアムブロックチェーンに記録された固有身元を持ちます</span><span data-lang="en">Each Agent has a unique identity recorded on Ethereum blockchain</span></p>
+                            </div>
+                        </div>
+                        <div class="trust-feature">
+                            <span class="trust-icon">✓</span>
+                            <div>
+                                <h4><span data-lang="ko" class="active">행동 이력 투명 공개</span><span data-lang="ja">行動履歴の透明公開</span><span data-lang="en">Transparent Track Record</span></h4>
+                                <p><span data-lang="ko" class="active">Agent의 모든 활동 기록이 검증 가능하게 보관됩니다</span><span data-lang="ja">Agentのすべての活動記録が検証可能に保管されます</span><span data-lang="en">All Agent activities are stored and verifiable</span></p>
+                            </div>
+                        </div>
+                        <div class="trust-feature">
+                            <span class="trust-icon">🛡️</span>
+                            <div>
+                                <h4><span data-lang="ko" class="active">악의적 행위 불가능</span><span data-lang="ja">悪意ある行為は不可能</span><span data-lang="en">Bad Actors Can't Profit</span></h4>
+                                <p><span data-lang="ko" class="active">시스템 설계상 부정 행위가 경제적으로 손해입니다</span><span data-lang="ja">システム設計上、不正行為は経済的に損失です</span><span data-lang="en">System designed so misbehavior is simply unprofitable</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="trust-visual">
+                    <img src="images/data-connection.png" alt="Trusted AI Network">
                 </div>
             </div>
         </div>
