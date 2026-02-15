@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatchHz — 당신의 주파수에 맞는 사람</title>
-    <meta name="description" content="수백 번의 스와이프 대신, 단 한 번의 완벽한 매칭. MatchHz가 당신의 이상형을 찾아드립니다.">
+    <title>MatchHz — 당신의 주파수에 맞는 사람을 찾아드립니다</title>
+    <meta name="description" content="수백 번의 스와이프 대신, 진정한 연결. MatchHz는 대화 스타일, 가치관, 라이프스타일을 분석해 당신과 진짜 맞는 사람을 찾아드립니다.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,16 +16,23 @@
         }
 
         :root {
-            --black: #000000;
-            --dark: #0a0a0a;
-            --dark-2: #111111;
-            --dark-3: #1a1a1a;
             --white: #ffffff;
-            --gray: #888888;
-            --gray-light: #cccccc;
-            --accent: #ff2d55;
-            --accent-2: #af52de;
-            --gradient: linear-gradient(135deg, #ff2d55 0%, #af52de 50%, #5856d6 100%);
+            --bg: #fafbfc;
+            --bg-alt: #f5f7fa;
+            --text: #1a1a2e;
+            --text-light: #6b7280;
+            --text-lighter: #9ca3af;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            --gradient-light: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+            --radius: 16px;
+            --radius-lg: 24px;
         }
 
         html {
@@ -33,17 +40,21 @@
         }
 
         body {
-            font-family: 'Outfit', 'Noto Sans KR', 'Noto Sans JP', -apple-system, sans-serif;
-            background: var(--black);
-            color: var(--white);
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans KR', 'Noto Sans JP', -apple-system, sans-serif;
+            background: var(--white);
+            color: var(--text);
+            line-height: 1.7;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Utility */
         .container {
             max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-sm {
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 24px;
         }
@@ -62,66 +73,70 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 20px 0;
-            transition: background 0.3s, backdrop-filter 0.3s;
-        }
-
-        nav.scrolled {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         nav .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 72px;
         }
 
         .logo {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: -0.5px;
+            color: var(--text);
+        }
+
+        .logo span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 32px;
+            gap: 24px;
         }
 
         .lang-switch {
             display: flex;
-            gap: 4px;
-            background: var(--dark-2);
+            background: var(--bg);
             padding: 4px;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .lang-btn {
-            padding: 8px 12px;
+            padding: 8px 14px;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             background: transparent;
             border: none;
-            color: var(--gray);
+            color: var(--text-light);
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.2s;
             font-family: inherit;
         }
 
         .lang-btn.active {
-            background: var(--dark-3);
-            color: var(--white);
+            background: var(--white);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
         }
 
         .nav-cta {
             padding: 12px 24px;
             font-size: 14px;
             font-weight: 600;
-            background: var(--white);
-            color: var(--black);
+            background: var(--gradient);
+            color: var(--white);
             border: none;
             border-radius: 100px;
             cursor: pointer;
@@ -131,102 +146,99 @@
 
         .nav-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(255, 45, 85, 0.3);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
+            padding: 160px 0 100px;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--white) 100%);
             position: relative;
-            padding: 120px 0 80px;
             overflow: hidden;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 0;
-        }
-
-        .hero-bg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.4;
-        }
-
-        .hero-bg::after {
+        .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.9) 100%);
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
         }
 
         .hero-content {
             position: relative;
             z-index: 10;
-            max-width: 720px;
         }
 
-        .coming-soon-badge {
+        .badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
-            background: rgba(255, 45, 85, 0.1);
-            border: 1px solid rgba(255, 45, 85, 0.3);
+            padding: 8px 16px;
+            background: var(--gradient-light);
             border-radius: 100px;
             font-size: 13px;
             font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 32px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: var(--primary);
+            margin-bottom: 24px;
         }
 
-        .coming-soon-badge::before {
+        .badge::before {
             content: '';
             width: 8px;
             height: 8px;
-            background: var(--accent);
+            background: var(--primary);
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .hero h1 {
-            font-size: clamp(40px, 7vw, 72px);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -2px;
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
             margin-bottom: 24px;
+            color: var(--text);
         }
 
-        .hero-subtitle {
-            font-size: clamp(18px, 2.5vw, 22px);
-            color: var(--gray-light);
-            font-weight: 400;
-            line-height: 1.6;
-            margin-bottom: 48px;
-            max-width: 560px;
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 480px;
         }
 
         .hero-form {
             display: flex;
             gap: 12px;
-            max-width: 480px;
+            margin-bottom: 16px;
         }
 
         .hero-input {
@@ -234,32 +246,32 @@
             padding: 18px 24px;
             font-size: 16px;
             font-family: inherit;
-            background: var(--dark-2);
-            border: 1px solid var(--dark-3);
-            border-radius: 16px;
-            color: var(--white);
+            background: var(--white);
+            border: 2px solid var(--bg-alt);
+            border-radius: 14px;
+            color: var(--text);
             outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .hero-input::placeholder {
-            color: var(--gray);
+            color: var(--text-lighter);
         }
 
         .hero-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(255, 45, 85, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
 
         .hero-btn {
-            padding: 18px 32px;
+            padding: 18px 36px;
             font-size: 16px;
             font-weight: 600;
             font-family: inherit;
             background: var(--gradient);
             color: var(--white);
             border: none;
-            border-radius: 16px;
+            border-radius: 14px;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             white-space: nowrap;
@@ -267,23 +279,38 @@
 
         .hero-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 40px rgba(255, 45, 85, 0.3);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.25);
         }
 
         .hero-note {
-            margin-top: 16px;
-            font-size: 13px;
-            color: var(--gray);
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .hero-note strong {
+            color: var(--primary);
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
         }
 
         .success-msg {
             display: none;
-            padding: 20px 24px;
-            background: rgba(52, 199, 89, 0.1);
-            border: 1px solid rgba(52, 199, 89, 0.3);
-            border-radius: 16px;
-            color: #34c759;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 14px;
+            color: #059669;
             font-size: 15px;
+            font-weight: 500;
         }
 
         .success-msg.show {
@@ -294,11 +321,356 @@
             display: none;
         }
 
-        /* Stats Bar */
-        .stats-bar {
+        /* Logos */
+        .logos-section {
             padding: 60px 0;
-            border-top: 1px solid var(--dark-3);
-            border-bottom: 1px solid var(--dark-3);
+            border-bottom: 1px solid var(--bg-alt);
+        }
+
+        .logos-label {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-lighter);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+        }
+
+        .logos-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            opacity: 0.5;
+            filter: grayscale(100%);
+        }
+
+        .logos-grid span {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* Problem Section */
+        .problem-section {
+            padding: 120px 0;
+            background: var(--white);
+        }
+
+        .problem-section .container-sm {
+            text-align: center;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 60px;
+            line-height: 1.8;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            text-align: left;
+        }
+
+        .problem-card {
+            padding: 32px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .problem-card:hover {
+            background: var(--white);
+            border-color: var(--bg-alt);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .problem-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-light);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .problem-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .problem-card p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            padding: 120px 0;
+            background: var(--bg);
+        }
+
+        .solution-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .solution-grid:last-child {
+            margin-bottom: 0;
+        }
+
+        .solution-grid.reverse {
+            direction: rtl;
+        }
+
+        .solution-grid.reverse > * {
+            direction: ltr;
+        }
+
+        .solution-image {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .solution-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .solution-content h3 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .solution-content > p {
+            font-size: 17px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .solution-features {
+            list-style: none;
+        }
+
+        .solution-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .solution-features li:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-check {
+            width: 28px;
+            height: 28px;
+            background: var(--gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-text h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-section {
+            padding: 120px 0;
+            background: var(--white);
+        }
+
+        .how-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 40px 24px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            position: relative;
+        }
+
+        .step-card::after {
+            content: '→';
+            position: absolute;
+            right: -24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--text-lighter);
+        }
+
+        .step-card:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Technology Section */
+        .tech-section {
+            padding: 120px 0;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--white) 100%);
+        }
+
+        .tech-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .tech-card {
+            padding: 40px;
+            background: var(--white);
+            border: 1px solid var(--bg-alt);
+            border-radius: var(--radius);
+            transition: all 0.3s;
+        }
+
+        .tech-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .tech-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tech-card h3 span {
+            font-size: 28px;
+        }
+
+        .tech-card p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .tech-stats {
+            display: flex;
+            gap: 32px;
+        }
+
+        .tech-stat {
+            text-align: left;
+        }
+
+        .tech-stat strong {
+            display: block;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .tech-stat span {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 0;
+            background: var(--text);
+            color: var(--white);
         }
 
         .stats-grid {
@@ -309,182 +681,30 @@
         }
 
         .stat-item h3 {
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 56px;
+            font-weight: 800;
             margin-bottom: 8px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .stat-item p {
             font-size: 14px;
-            color: var(--gray);
+            color: rgba(255,255,255,0.7);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* How It Works */
-        .how-it-works {
-            padding: 120px 0;
-        }
-
-        .section-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-size: clamp(32px, 5vw, 48px);
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 24px;
-        }
-
-        .section-desc {
-            font-size: 18px;
-            color: var(--gray-light);
-            max-width: 600px;
-            margin-bottom: 64px;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-        }
-
-        .step-card {
-            padding: 40px 32px;
-            background: var(--dark);
-            border: 1px solid var(--dark-3);
-            border-radius: 24px;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .step-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-        }
-
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            background: var(--gradient);
-            border-radius: 14px;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .step-card h3 {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .step-card p {
-            font-size: 15px;
-            color: var(--gray);
-            line-height: 1.7;
-        }
-
-        /* Feature Section */
-        .feature-section {
-            padding: 120px 0;
-        }
-
-        .feature-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-            margin-bottom: 120px;
-        }
-
-        .feature-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .feature-row.reverse {
-            direction: rtl;
-        }
-
-        .feature-row.reverse > * {
-            direction: ltr;
-        }
-
-        .feature-image {
-            border-radius: 24px;
-            overflow: hidden;
-            aspect-ratio: 4/3;
-        }
-
-        .feature-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .feature-image:hover img {
-            transform: scale(1.05);
-        }
-
-        .feature-content h3 {
-            font-size: clamp(28px, 4vw, 36px);
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 20px;
-        }
-
-        .feature-content p {
-            font-size: 17px;
-            color: var(--gray-light);
-            line-height: 1.8;
-            margin-bottom: 24px;
-        }
-
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 15px;
-            color: var(--gray-light);
-            margin-bottom: 12px;
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            background: rgba(52, 199, 89, 0.2);
-            color: #34c759;
-            border-radius: 50%;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
         /* Testimonials */
-        .testimonials {
+        .testimonials-section {
             padding: 120px 0;
-            background: var(--dark);
+            background: var(--white);
         }
 
         .testimonials-header {
             text-align: center;
-            margin-bottom: 64px;
+            margin-bottom: 60px;
         }
 
         .testimonials-grid {
@@ -495,16 +715,27 @@
 
         .testimonial-card {
             padding: 32px;
-            background: var(--dark-2);
-            border: 1px solid var(--dark-3);
-            border-radius: 20px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            transition: all 0.3s;
         }
 
-        .testimonial-card p {
+        .testimonial-card:hover {
+            background: var(--white);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .testimonial-stars {
+            color: #fbbf24;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-card > p {
             font-size: 16px;
             line-height: 1.7;
             margin-bottom: 24px;
-            color: var(--gray-light);
+            color: var(--text);
         }
 
         .testimonial-author {
@@ -514,15 +745,16 @@
         }
 
         .testimonial-avatar {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 16px;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
         }
 
         .testimonial-info h4 {
@@ -532,12 +764,172 @@
 
         .testimonial-info span {
             font-size: 13px;
-            color: var(--gray);
+            color: var(--text-light);
         }
 
-        /* CTA Section */
+        /* Pricing Preview */
+        .pricing-section {
+            padding: 120px 0;
+            background: var(--bg);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            padding: 40px 32px;
+            background: var(--white);
+            border: 1px solid var(--bg-alt);
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            position: relative;
+        }
+
+        .pricing-card.featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 4px 16px;
+            background: var(--gradient);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 100px;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .price {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .price span {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .pricing-card .price-note {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            font-size: 14px;
+            color: var(--text-light);
+            border-bottom: 1px solid var(--bg-alt);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .pricing-btn.primary {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+
+        .pricing-btn.secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--bg-alt);
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding: 120px 0;
+            background: var(--white);
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            padding: 28px;
+            background: var(--bg);
+            border-radius: var(--radius);
+        }
+
+        .faq-item h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .faq-item p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* CTA */
         .cta-section {
-            padding: 160px 0;
+            padding: 140px 0;
+            background: var(--text);
+            color: var(--white);
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -546,13 +938,11 @@
         .cta-section::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(255, 45, 85, 0.15) 0%, transparent 70%);
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
         }
 
         .cta-content {
@@ -561,15 +951,15 @@
         }
 
         .cta-section h2 {
-            font-size: clamp(36px, 6vw, 56px);
-            font-weight: 700;
+            font-size: 48px;
+            font-weight: 800;
             letter-spacing: -1px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        .cta-section p {
+        .cta-section > .cta-content > p {
             font-size: 18px;
-            color: var(--gray-light);
+            color: rgba(255,255,255,0.7);
             margin-bottom: 40px;
             max-width: 500px;
             margin-left: auto;
@@ -580,111 +970,141 @@
             display: flex;
             gap: 12px;
             max-width: 480px;
-            margin: 0 auto;
+            margin: 0 auto 20px;
+        }
+
+        .cta-form .hero-input {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .cta-form .hero-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .cta-form .hero-input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
         }
 
         /* Footer */
         footer {
-            padding: 40px 0;
-            border-top: 1px solid var(--dark-3);
+            padding: 60px 0 40px;
+            background: var(--text);
+            color: rgba(255,255,255,0.6);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        footer .container {
+        .footer-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        footer p {
-            font-size: 14px;
-            color: var(--gray);
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
         }
 
         .footer-links {
             display: flex;
-            gap: 24px;
+            gap: 32px;
         }
 
         .footer-links a {
             font-size: 14px;
-            color: var(--gray);
+            color: rgba(255,255,255,0.6);
             text-decoration: none;
             transition: color 0.2s;
         }
 
         .footer-links a:hover {
-            color: var(--white);
+            color: white;
         }
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .steps-grid {
+            .hero .container,
+            .solution-grid {
                 grid-template-columns: 1fr;
+                gap: 60px;
             }
 
-            .feature-row {
-                grid-template-columns: 1fr;
-                gap: 40px;
+            .hero-image {
+                order: -1;
             }
 
-            .feature-row.reverse {
+            .solution-grid.reverse {
                 direction: ltr;
             }
 
-            .testimonials-grid {
-                grid-template-columns: 1fr;
+            .steps-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .step-card::after {
+                display: none;
+            }
+
+            .stats-grid,
+            .pricing-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 768px) {
-            .nav-right {
-                gap: 16px;
-            }
-
             .nav-cta {
                 display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
             }
 
             .hero-form {
                 flex-direction: column;
             }
 
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 24px;
+            .problem-grid,
+            .testimonials-grid,
+            .tech-grid,
+            .steps-container,
+            .stats-grid,
+            .pricing-cards,
+            .faq-grid {
+                grid-template-columns: 1fr;
             }
 
-            .stat-item h3 {
-                font-size: 36px;
+            .section-title {
+                font-size: 32px;
             }
 
             .cta-form {
                 flex-direction: column;
             }
 
-            footer .container {
+            .footer-content {
                 flex-direction: column;
-                gap: 20px;
+                gap: 24px;
                 text-align: center;
             }
         }
 
-        /* Lang support */
+        /* Language */
         [data-lang] { display: none; }
         [data-lang].active { display: block; }
         span[data-lang].active, 
         h1 [data-lang].active,
         h2 [data-lang].active,
         h3 [data-lang].active,
+        h4 [data-lang].active,
         p [data-lang].active,
-        button [data-lang].active { display: inline; }
-        li[data-lang].active { display: flex; }
+        li [data-lang].active,
+        button [data-lang].active,
+        strong [data-lang].active { display: inline; }
 
-        /* Loading */
         .btn-loading {
             position: relative;
             color: transparent !important;
@@ -710,16 +1130,16 @@
     </style>
 </head>
 <body>
-    <nav id="nav">
+    <nav>
         <div class="container">
-            <div class="logo">Match<span class="gradient-text">Hz</span></div>
+            <div class="logo">Match<span>Hz</span></div>
             <div class="nav-right">
                 <div class="lang-switch">
                     <button class="lang-btn active" data-lang-btn="ko">한국어</button>
                     <button class="lang-btn" data-lang-btn="ja">日本語</button>
                     <button class="lang-btn" data-lang-btn="en">EN</button>
                 </div>
-                <button class="nav-cta" onclick="scrollToForm()">
+                <button class="nav-cta" onclick="scrollTo('#cta')">
                     <span data-lang="ko" class="active">사전 등록</span>
                     <span data-lang="ja">事前登録</span>
                     <span data-lang="en">Join Waitlist</span>
@@ -729,62 +1149,332 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-bg">
-            <img src="images/hero.png" alt="">
-        </div>
         <div class="container">
             <div class="hero-content">
-                <div class="coming-soon-badge">
-                    <span data-lang="ko" class="active">2025년 하반기 출시</span>
-                    <span data-lang="ja">2025年下半期リリース</span>
-                    <span data-lang="en">Launching Late 2025</span>
+                <div class="badge">
+                    <span data-lang="ko" class="active">2025년 하반기 출시 예정</span>
+                    <span data-lang="ja">2025年下半期リリース予定</span>
+                    <span data-lang="en">Coming Late 2025</span>
                 </div>
                 <h1>
-                    <span data-lang="ko" class="active">
-                        수백 번의 스와이프 대신,<br>
-                        <span class="gradient-text">단 한 번</span>의 완벽한 만남
-                    </span>
-                    <span data-lang="ja">
-                        何百回ものスワイプの代わりに、<br>
-                        <span class="gradient-text">たった一度</span>の完璧な出会い
-                    </span>
-                    <span data-lang="en">
-                        Skip the endless swiping.<br>
-                        Find your <span class="gradient-text">perfect match</span>.
-                    </span>
+                    <span data-lang="ko" class="active">스와이프는 그만.<br><span class="gradient-text">진짜 연결</span>을 시작하세요.</span>
+                    <span data-lang="ja">スワイプはもう終わり。<br><span class="gradient-text">本当のつながり</span>を始めましょう。</span>
+                    <span data-lang="en">Stop swiping.<br>Start <span class="gradient-text">connecting</span>.</span>
                 </h1>
-                <p class="hero-subtitle">
-                    <span data-lang="ko" class="active">MatchHz는 당신의 대화 스타일, 관심사, 가치관을 분석해 진정으로 어울리는 사람을 찾아드립니다. 피상적인 프로필이 아닌, 깊은 연결을 위한 새로운 방식.</span>
-                    <span data-lang="ja">MatchHzはあなたの会話スタイル、興味、価値観を分析し、本当に合う人を見つけます。表面的なプロフィールではなく、深いつながりのための新しい方法。</span>
-                    <span data-lang="en">MatchHz analyzes your conversation style, interests, and values to find someone who truly gets you. Not shallow profiles—real connection.</span>
+                <p class="hero-desc">
+                    <span data-lang="ko" class="active">MatchHz는 당신의 대화 스타일, 가치관, 유머 감각을 분석해 진정으로 어울리는 한 사람을 찾아드립니다. 수백 번의 스와이프 대신, 의미 있는 만남 하나.</span>
+                    <span data-lang="ja">MatchHzはあなたの会話スタイル、価値観、ユーモアセンスを分析し、本当に合う一人を見つけます。何百回ものスワイプの代わりに、意味のある出会いを。</span>
+                    <span data-lang="en">MatchHz analyzes your conversation style, values, and sense of humor to find someone who truly fits. Instead of hundreds of swipes, one meaningful connection.</span>
                 </p>
                 <form class="hero-form" id="heroForm">
                     <input type="email" class="hero-input" required id="heroEmail">
                     <button type="submit" class="hero-btn" id="heroBtn">
-                        <span data-lang="ko" class="active">알림 받기</span>
-                        <span data-lang="ja">通知を受ける</span>
-                        <span data-lang="en">Notify Me</span>
+                        <span data-lang="ko" class="active">무료 등록</span>
+                        <span data-lang="ja">無料登録</span>
+                        <span data-lang="en">Join Free</span>
                     </button>
                 </form>
                 <p class="hero-note">
-                    <span data-lang="ko" class="active">✨ 사전 등록자에게 3개월 무료 이용권 제공</span>
-                    <span data-lang="ja">✨ 事前登録者に3ヶ月無料利用券を提供</span>
-                    <span data-lang="en">✨ Early access members get 3 months free</span>
+                    <span data-lang="ko" class="active"><strong>✨ 사전 등록자 특전:</strong> 3개월 프리미엄 무료 + 우선 매칭</span>
+                    <span data-lang="ja"><strong>✨ 事前登録特典:</strong> 3ヶ月プレミアム無料 + 優先マッチング</span>
+                    <span data-lang="en"><strong>✨ Early bird perks:</strong> 3 months Premium free + priority matching</span>
                 </p>
                 <div class="success-msg" id="heroSuccess">
-                    <span data-lang="ko" class="active">🎉 등록 완료! 출시되면 가장 먼저 알려드릴게요.</span>
-                    <span data-lang="ja">🎉 登録完了！リリース時に真っ先にお知らせします。</span>
-                    <span data-lang="en">🎉 You're in! We'll notify you first when we launch.</span>
+                    <span data-lang="ko" class="active">🎉 등록 완료! 출시되면 가장 먼저 알려드릴게요. 특별 혜택도 함께요.</span>
+                    <span data-lang="ja">🎉 登録完了！リリース時に真っ先にお知らせします。特別特典もご一緒に。</span>
+                    <span data-lang="en">🎉 You're in! We'll notify you first at launch with exclusive perks.</span>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero-light.png" alt="MatchHz">
+            </div>
+        </div>
+    </section>
+
+    <section class="problem-section">
+        <div class="container">
+            <div class="container-sm" style="padding:0;">
+                <p class="section-label">
+                    <span data-lang="ko" class="active">문제</span>
+                    <span data-lang="ja">問題</span>
+                    <span data-lang="en">The Problem</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="ko" class="active">기존 데이팅 앱,<br>왜 지쳤을까요?</span>
+                    <span data-lang="ja">従来のデーティングアプリ、<br>なぜ疲れたのでしょう？</span>
+                    <span data-lang="en">Dating apps are exhausting.<br>Here's why.</span>
+                </h2>
+                <p class="section-desc">
+                    <span data-lang="ko" class="active">하루에 수십 번 스와이프. 수백 개의 프로필. 그런데 정작 만나면 어색한 침묵. 뭔가 잘못됐습니다.</span>
+                    <span data-lang="ja">1日に何十回もスワイプ。何百ものプロフィール。でも実際に会うとぎこちない沈黙。何かがおかしい。</span>
+                    <span data-lang="en">Dozens of swipes a day. Hundreds of profiles. Yet when you finally meet, awkward silence. Something's broken.</span>
+                </p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">📸</div>
+                    <h3>
+                        <span data-lang="ko" class="active">사진으로 판단하는 매칭</span>
+                        <span data-lang="ja">写真で判断するマッチング</span>
+                        <span data-lang="en">Photo-based matching</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">외모만 보고 결정합니다. 막상 만나면 대화가 안 통하고, 가치관이 다르고, 결국 시간 낭비.</span>
+                        <span data-lang="ja">外見だけで決める。実際に会うと会話が通じず、価値観が違い、結局時間の無駄。</span>
+                        <span data-lang="en">Decisions based on looks alone. Meet up and find no chemistry, different values, wasted time.</span>
+                    </p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">😓</div>
+                    <h3>
+                        <span data-lang="ko" class="active">끝없는 스와이프 피로</span>
+                        <span data-lang="ja">終わりのないスワイプ疲れ</span>
+                        <span data-lang="en">Endless swipe fatigue</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">선택지가 너무 많으면 오히려 선택하기 어렵습니다. 매일 수십 명을 스와이프하지만, 진정한 연결은 찾기 힘들죠.</span>
+                        <span data-lang="ja">選択肢が多すぎると、かえって選びにくくなります。毎日何十人もスワイプしても、本当のつながりは見つからない。</span>
+                        <span data-lang="en">Too many options make choosing harder. Swiping dozens daily but never finding real connection.</span>
+                    </p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">💬</div>
+                    <h3>
+                        <span data-lang="ko" class="active">어색한 첫 대화</span>
+                        <span data-lang="ja">ぎこちない最初の会話</span>
+                        <span data-lang="en">Awkward first conversations</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">"안녕하세요" 이후 뭐라고 해야 할지 모르겠고, 대화가 금방 끊기고, 관심이 식어버립니다.</span>
+                        <span data-lang="ja">「こんにちは」の後、何を言えばいいかわからず、会話がすぐ途切れ、関心が冷めてしまう。</span>
+                        <span data-lang="en">"Hi" and then... what? Conversations fizzle, interest fades, connections never form.</span>
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="stats-bar">
+    <section class="solution-section">
+        <div class="container">
+            <div class="solution-header">
+                <p class="section-label">
+                    <span data-lang="ko" class="active">솔루션</span>
+                    <span data-lang="ja">ソリューション</span>
+                    <span data-lang="en">The Solution</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="ko" class="active">MatchHz는 다르게 작동합니다</span>
+                    <span data-lang="ja">MatchHzは違う方法で動きます</span>
+                    <span data-lang="en">MatchHz works differently</span>
+                </h2>
+                <p class="section-desc">
+                    <span data-lang="ko" class="active">외모가 아닌 '주파수'로 매칭합니다. 대화 스타일, 유머 감각, 가치관 — 눈에 보이지 않지만 관계에서 가장 중요한 것들.</span>
+                    <span data-lang="ja">外見ではなく「周波数」でマッチング。会話スタイル、ユーモアセンス、価値観 — 目には見えないけど、関係で最も重要なもの。</span>
+                    <span data-lang="en">We match on 'frequency', not photos. Conversation style, humor, values — invisible but essential to real relationships.</span>
+                </p>
+            </div>
+
+            <div class="solution-grid">
+                <div class="solution-image">
+                    <img src="images/matching-visual.png" alt="Smart Matching">
+                </div>
+                <div class="solution-content">
+                    <h3>
+                        <span data-lang="ko" class="active">300가지 이상의 호환성 분석</span>
+                        <span data-lang="ja">300以上の互換性分析</span>
+                        <span data-lang="en">300+ compatibility factors analyzed</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">단순히 "좋아하는 것"을 묻지 않습니다. 자연스러운 대화를 통해 당신의 말투, 반응 속도, 유머 스타일, 감정 표현 방식까지 분석합니다.</span>
+                        <span data-lang="ja">単に「好きなもの」を聞くのではありません。自然な会話を通じて、あなたの話し方、反応速度、ユーモアスタイル、感情表現方法まで分析します。</span>
+                        <span data-lang="en">We don't just ask what you like. Through natural conversation, we analyze your speech patterns, response time, humor style, and emotional expression.</span>
+                    </p>
+                    <ul class="solution-features">
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">대화 패턴 분석</span><span data-lang="ja">会話パターン分析</span><span data-lang="en">Conversation pattern analysis</span></h4>
+                                <p><span data-lang="ko" class="active">어떤 주제에 열정적인지, 대화 리듬이 어떤지 파악</span><span data-lang="ja">どのトピックに熱心か、会話のリズムを把握</span><span data-lang="en">Understand what topics excite you, your conversation rhythm</span></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">가치관 매핑</span><span data-lang="ja">価値観マッピング</span><span data-lang="en">Value mapping</span></h4>
+                                <p><span data-lang="ko" class="active">삶에서 중요하게 생각하는 것들을 자연스럽게 파악</span><span data-lang="ja">人生で大切にしていることを自然に把握</span><span data-lang="en">Naturally understand what matters most to you in life</span></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">유머 궁합 측정</span><span data-lang="ja">ユーモア相性測定</span><span data-lang="en">Humor compatibility</span></h4>
+                                <p><span data-lang="ko" class="active">웃음 코드가 맞는 사람을 찾아 연결</span><span data-lang="ja">笑いのコードが合う人を見つけて接続</span><span data-lang="en">Find someone who laughs at the same things</span></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solution-grid reverse">
+                <div class="solution-image">
+                    <img src="images/first-date.png" alt="Perfect First Date">
+                </div>
+                <div class="solution-content">
+                    <h3>
+                        <span data-lang="ko" class="active">첫 만남, 더 이상 어색하지 않게</span>
+                        <span data-lang="ja">初対面、もうぎこちなくない</span>
+                        <span data-lang="en">First dates, never awkward again</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">MatchHz는 상대방의 관심사와 대화 스타일에 맞는 화제를 미리 알려드립니다. "뭐라고 시작하지?"라는 고민은 이제 그만.</span>
+                        <span data-lang="ja">MatchHzは相手の関心事と会話スタイルに合ったトピックを事前にお知らせします。「何から始めよう？」という悩みはもう終わり。</span>
+                        <span data-lang="en">MatchHz tells you topics that match their interests and conversation style. No more "what should I say first?" stress.</span>
+                    </p>
+                    <ul class="solution-features">
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">맞춤형 대화 주제</span><span data-lang="ja">カスタマイズされた会話トピック</span><span data-lang="en">Personalized conversation topics</span></h4>
+                                <p><span data-lang="ko" class="active">두 사람 모두 흥미로워할 주제를 미리 준비</span><span data-lang="ja">二人とも興味を持つトピックを事前に準備</span><span data-lang="en">Topics both of you will find interesting, prepared in advance</span></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">실시간 대화 가이드</span><span data-lang="ja">リアルタイム会話ガイド</span><span data-lang="en">Real-time conversation guide</span></h4>
+                                <p><span data-lang="ko" class="active">대화가 막힐 때 자연스러운 다음 주제 제안</span><span data-lang="ja">会話が詰まったとき、自然な次のトピックを提案</span><span data-lang="en">Natural topic suggestions when conversation stalls</span></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">분위기 인사이트</span><span data-lang="ja">雰囲気インサイト</span><span data-lang="en">Mood insights</span></h4>
+                                <p><span data-lang="ko" class="active">상대방의 반응을 분석해 다음 행동 추천</span><span data-lang="ja">相手の反応を分析して次のアクションを推薦</span><span data-lang="en">Analyze their reactions and recommend next moves</span></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="solution-grid">
+                <div class="solution-image">
+                    <img src="images/couple-park.png" alt="Real Connection">
+                </div>
+                <div class="solution-content">
+                    <h3>
+                        <span data-lang="ko" class="active">양보다 질. 진짜 연결.</span>
+                        <span data-lang="ja">量より質。本当のつながり。</span>
+                        <span data-lang="en">Quality over quantity. Real connection.</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">하루에 수백 명을 보여주지 않습니다. 수백 명을 분석해서 가장 잘 맞는 소수만 소개합니다. 한 번의 만남이 백 번의 스와이프보다 가치 있도록.</span>
+                        <span data-lang="ja">1日に何百人も見せません。何百人も分析して最も相性の良い少数だけを紹介します。1回の出会いが100回のスワイプより価値があるように。</span>
+                        <span data-lang="en">We don't show hundreds a day. We analyze hundreds to introduce only the few who truly fit. One meeting worth more than a hundred swipes.</span>
+                    </p>
+                    <ul class="solution-features">
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">엄선된 매칭</span><span data-lang="ja">厳選されたマッチング</span><span data-lang="en">Curated matches</span></h4>
+                                <p><span data-lang="ko" class="active">적합도 85% 이상인 매칭만 제안</span><span data-lang="ja">適合度85%以上のマッチングのみ提案</span><span data-lang="en">Only 85%+ compatibility matches suggested</span></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">깊이 있는 프로필</span><span data-lang="ja">深みのあるプロフィール</span><span data-lang="en">In-depth profiles</span></h4>
+                                <p><span data-lang="ko" class="active">사진 몇 장이 아닌, 상대방을 진짜 알 수 있는 정보</span><span data-lang="ja">数枚の写真ではなく、相手を本当に知れる情報</span><span data-lang="en">Not just photos, but information that lets you truly know them</span></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="feature-check">✓</div>
+                            <div class="feature-text">
+                                <h4><span data-lang="ko" class="active">관계 후 지원</span><span data-lang="ja">関係後のサポート</span><span data-lang="en">Post-match support</span></h4>
+                                <p><span data-lang="ko" class="active">만남 이후에도 관계 발전을 위한 조언 제공</span><span data-lang="ja">出会い後も関係発展のためのアドバイスを提供</span><span data-lang="en">Relationship growth tips even after you've met</span></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-section">
+        <div class="container">
+            <div class="how-header">
+                <p class="section-label">
+                    <span data-lang="ko" class="active">이용 방법</span>
+                    <span data-lang="ja">使い方</span>
+                    <span data-lang="en">How It Works</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="ko" class="active">간단한 4단계</span>
+                    <span data-lang="ja">シンプルな4ステップ</span>
+                    <span data-lang="en">Simple 4 steps</span>
+                </h2>
+            </div>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>
+                        <span data-lang="ko" class="active">가입하기</span>
+                        <span data-lang="ja">登録する</span>
+                        <span data-lang="en">Sign up</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">이메일 또는 소셜 계정으로 30초 만에 가입</span>
+                        <span data-lang="ja">メールまたはソーシャルアカウントで30秒で登録</span>
+                        <span data-lang="en">30 seconds with email or social account</span>
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>
+                        <span data-lang="ko" class="active">대화 나누기</span>
+                        <span data-lang="ja">会話する</span>
+                        <span data-lang="en">Have a chat</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">자연스러운 대화를 통해 당신을 파악합니다</span>
+                        <span data-lang="ja">自然な会話を通じてあなたを把握します</span>
+                        <span data-lang="en">Natural conversation helps us understand you</span>
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>
+                        <span data-lang="ko" class="active">매칭 받기</span>
+                        <span data-lang="ja">マッチを受ける</span>
+                        <span data-lang="en">Get matched</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">당신과 주파수가 맞는 상대를 소개받습니다</span>
+                        <span data-lang="ja">あなたと周波数が合う相手を紹介されます</span>
+                        <span data-lang="en">Meet someone on your frequency</span>
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>
+                        <span data-lang="ko" class="active">만남 시작</span>
+                        <span data-lang="ja">出会いを始める</span>
+                        <span data-lang="en">Start dating</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">대화 가이드와 함께 자신감 있게 만나세요</span>
+                        <span data-lang="ja">会話ガイドと共に自信を持って会いましょう</span>
+                        <span data-lang="en">Meet confidently with conversation guides</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <h3 class="gradient-text">92%</h3>
+                    <h3>92%</h3>
                     <p>
                         <span data-lang="ko" class="active">매칭 만족도</span>
                         <span data-lang="ja">マッチング満足度</span>
@@ -792,15 +1482,15 @@
                     </p>
                 </div>
                 <div class="stat-item">
-                    <h3 class="gradient-text">3.2x</h3>
+                    <h3>3.2x</h3>
                     <p>
-                        <span data-lang="ko" class="active">더 긴 대화 지속</span>
-                        <span data-lang="ja">より長い会話継続</span>
+                        <span data-lang="ko" class="active">더 긴 대화</span>
+                        <span data-lang="ja">より長い会話</span>
                         <span data-lang="en">Longer Conversations</span>
                     </p>
                 </div>
                 <div class="stat-item">
-                    <h3 class="gradient-text">78%</h3>
+                    <h3>78%</h3>
                     <p>
                         <span data-lang="ko" class="active">2회 이상 만남</span>
                         <span data-lang="ja">2回以上の出会い</span>
@@ -808,189 +1498,93 @@
                     </p>
                 </div>
                 <div class="stat-item">
-                    <h3 class="gradient-text">4.9</h3>
+                    <h3>4.9★</h3>
                     <p>
                         <span data-lang="ko" class="active">베타 테스터 평점</span>
                         <span data-lang="ja">ベータテスター評価</span>
-                        <span data-lang="en">Beta Tester Rating</span>
+                        <span data-lang="en">Beta Rating</span>
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="how-it-works">
+    <section class="tech-section">
         <div class="container">
-            <p class="section-label">
-                <span data-lang="ko" class="active">어떻게 작동하나요</span>
-                <span data-lang="ja">どのように機能するか</span>
-                <span data-lang="en">How It Works</span>
-            </p>
-            <h2 class="section-title">
-                <span data-lang="ko" class="active">3단계로 만나는 인연</span>
-                <span data-lang="ja">3ステップで出会う運命</span>
-                <span data-lang="en">Three Steps to Connection</span>
-            </h2>
-            <p class="section-desc">
-                <span data-lang="ko" class="active">복잡한 설정 없이, 자연스럽게 당신을 이해하고 최적의 상대를 찾아드립니다.</span>
-                <span data-lang="ja">複雑な設定なしで、自然にあなたを理解し、最適な相手を見つけます。</span>
-                <span data-lang="en">No complicated setup. We naturally learn who you are and find your ideal match.</span>
-            </p>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>
-                        <span data-lang="ko" class="active">자연스러운 대화</span>
-                        <span data-lang="ja">自然な会話</span>
-                        <span data-lang="en">Natural Conversation</span>
-                    </h3>
+            <div class="tech-header">
+                <p class="section-label">
+                    <span data-lang="ko" class="active">기술</span>
+                    <span data-lang="ja">テクノロジー</span>
+                    <span data-lang="en">Technology</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="ko" class="active">어떻게 가능할까요?</span>
+                    <span data-lang="ja">どうやって可能なのか？</span>
+                    <span data-lang="en">How is this possible?</span>
+                </h2>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3><span>🧠</span> <span data-lang="ko" class="active">자연어 분석</span><span data-lang="ja">自然言語分析</span><span data-lang="en">Natural Language Analysis</span></h3>
                     <p>
-                        <span data-lang="ko" class="active">설문지 대신 자연스러운 대화를 나눕니다. 취향, 유머 감각, 대화 스타일까지 — 진짜 당신을 파악합니다.</span>
-                        <span data-lang="ja">アンケートの代わりに自然な会話をします。趣味、ユーモアセンス、会話スタイルまで — 本当のあなたを把握します。</span>
-                        <span data-lang="en">Instead of questionnaires, we have real conversations. Your humor, your style, your vibe — we get the real you.</span>
+                        <span data-lang="ko" class="active">대화를 분석해 말투, 유머 스타일, 감정 표현 패턴을 파악합니다. 단순히 "뭘 좋아하세요?"가 아닌, 진짜 당신을 이해합니다.</span>
+                        <span data-lang="ja">会話を分析して話し方、ユーモアスタイル、感情表現パターンを把握します。単に「何が好き？」ではなく、本当のあなたを理解します。</span>
+                        <span data-lang="en">We analyze conversations to understand speech patterns, humor, and emotional expression. Not just "what do you like?" — we understand the real you.</span>
                     </p>
+                    <div class="tech-stats">
+                        <div class="tech-stat">
+                            <strong>300+</strong>
+                            <span><span data-lang="ko" class="active">분석 포인트</span><span data-lang="ja">分析ポイント</span><span data-lang="en">Analysis points</span></span>
+                        </div>
+                        <div class="tech-stat">
+                            <strong>50ms</strong>
+                            <span><span data-lang="ko" class="active">응답 속도</span><span data-lang="ja">応答速度</span><span data-lang="en">Response time</span></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>
-                        <span data-lang="ko" class="active">주파수 매칭</span>
-                        <span data-lang="ja">周波数マッチング</span>
-                        <span data-lang="en">Frequency Matching</span>
-                    </h3>
+                <div class="tech-card">
+                    <h3><span>🔗</span> <span data-lang="ko" class="active">주파수 매칭</span><span data-lang="ja">周波数マッチング</span><span data-lang="en">Frequency Matching</span></h3>
                     <p>
-                        <span data-lang="ko" class="active">수백 가지 요소를 분석해 당신과 '주파수'가 맞는 사람을 찾습니다. 겉모습이 아닌 본질적인 궁합.</span>
-                        <span data-lang="ja">数百の要素を分析し、あなたと「周波数」が合う人を見つけます。外見ではなく本質的な相性。</span>
-                        <span data-lang="en">We analyze hundreds of factors to find people on your 'frequency'. Not looks — genuine compatibility.</span>
+                        <span data-lang="ko" class="active">두 사람의 '주파수'가 맞는지 측정합니다. 대화 리듬, 관심사 깊이, 유머 코드, 가치관 정렬 — 모든 것이 자연스럽게 맞아야 진정한 연결이 됩니다.</span>
+                        <span data-lang="ja">二人の「周波数」が合うか測定します。会話のリズム、興味の深さ、ユーモアコード、価値観の整合 — すべてが自然に合って初めて本当のつながりになります。</span>
+                        <span data-lang="en">We measure if two people's 'frequencies' match. Conversation rhythm, depth of interests, humor codes, value alignment — everything must click for real connection.</span>
                     </p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>
-                        <span data-lang="ko" class="active">의미 있는 만남</span>
-                        <span data-lang="ja">意味のある出会い</span>
-                        <span data-lang="en">Meaningful Dates</span>
-                    </h3>
-                    <p>
-                        <span data-lang="ko" class="active">적합도 높은 매칭만 소개합니다. 어색한 첫 만남? 걱정 마세요. 대화 가이드까지 제공합니다.</span>
-                        <span data-lang="ja">適合度の高いマッチングだけを紹介します。ぎこちない初対面？心配無用。会話ガイドも提供します。</span>
-                        <span data-lang="en">We only introduce high-compatibility matches. Awkward first dates? We've got conversation guides for that.</span>
-                    </p>
+                    <div class="tech-stats">
+                        <div class="tech-stat">
+                            <strong>92%</strong>
+                            <span><span data-lang="ko" class="active">정확도</span><span data-lang="ja">正確度</span><span data-lang="en">Accuracy</span></span>
+                        </div>
+                        <div class="tech-stat">
+                            <strong>387</strong>
+                            <span><span data-lang="ko" class="active">평균 탐색</span><span data-lang="ja">平均探索</span><span data-lang="en">Avg. searches</span></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="feature-section">
-        <div class="container">
-            <div class="feature-row">
-                <div class="feature-image">
-                    <img src="images/lifestyle1.png" alt="Real connection">
-                </div>
-                <div class="feature-content">
-                    <h3>
-                        <span data-lang="ko" class="active">프로필 사진이 아닌,<br>진짜 연결</span>
-                        <span data-lang="ja">プロフィール写真ではなく、<br>本当のつながり</span>
-                        <span data-lang="en">Real connection,<br>not profile pics</span>
-                    </h3>
-                    <p>
-                        <span data-lang="ko" class="active">기존 데이팅 앱은 사진으로 판단합니다. MatchHz는 다릅니다. 대화 패턴, 유머 코드, 가치관 — 눈에 보이지 않는 것들로 매칭합니다.</span>
-                        <span data-lang="ja">従来のデーティングアプリは写真で判断します。MatchHzは違います。会話パターン、ユーモアコード、価値観 — 目に見えないもので​マッチングします。</span>
-                        <span data-lang="en">Traditional apps judge by photos. MatchHz is different. We match on conversation patterns, humor, values — the things that actually matter.</span>
-                    </p>
-                    <ul class="feature-list">
-                        <li data-lang="ko" class="active">대화 스타일 분석</li>
-                        <li data-lang="ko" class="active">가치관 & 라이프스타일 매칭</li>
-                        <li data-lang="ko" class="active">유머 궁합 측정</li>
-                        <li data-lang="ja">会話スタイル分析</li>
-                        <li data-lang="ja">価値観&ライフスタイルマッチング</li>
-                        <li data-lang="ja">ユーモア相性測定</li>
-                        <li data-lang="en">Conversation style analysis</li>
-                        <li data-lang="en">Values & lifestyle matching</li>
-                        <li data-lang="en">Humor compatibility scoring</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="feature-row reverse">
-                <div class="feature-image">
-                    <img src="images/feature1.png" alt="Smart assistance">
-                </div>
-                <div class="feature-content">
-                    <h3>
-                        <span data-lang="ko" class="active">첫 대화,<br>더 이상 어렵지 않게</span>
-                        <span data-lang="ja">最初の会話、<br>もう難しくない</span>
-                        <span data-lang="en">First conversations,<br>made easy</span>
-                    </h3>
-                    <p>
-                        <span data-lang="ko" class="active">"뭐라고 말해야 하지?" 더 이상 고민하지 마세요. 상대의 관심사와 대화 스타일에 맞는 화제를 제안해 드립니다. 자연스럽게, 당신답게.</span>
-                        <span data-lang="ja">「何を話せばいいの？」もう悩まないでください。相手の関心事と会話スタイルに合ったトピックを提案します。自然に、あなたらしく。</span>
-                        <span data-lang="en">"What should I say?" Stop worrying. We suggest topics based on their interests and conversation style. Natural, authentic, you.</span>
-                    </p>
-                    <ul class="feature-list">
-                        <li data-lang="ko" class="active">맞춤형 대화 주제 추천</li>
-                        <li data-lang="ko" class="active">실시간 분위기 파악</li>
-                        <li data-lang="ko" class="active">자연스러운 후속 질문 제안</li>
-                        <li data-lang="ja">カスタマイズされた会話トピック推薦</li>
-                        <li data-lang="ja">リアルタイム雰囲気把握</li>
-                        <li data-lang="ja">自然なフォローアップ質問提案</li>
-                        <li data-lang="en">Personalized topic suggestions</li>
-                        <li data-lang="en">Real-time vibe reading</li>
-                        <li data-lang="en">Natural follow-up prompts</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="feature-row">
-                <div class="feature-image">
-                    <img src="images/algorithm.png" alt="Advanced matching">
-                </div>
-                <div class="feature-content">
-                    <h3>
-                        <span data-lang="ko" class="active">수백 번의 탐색,<br>단 하나의 추천</span>
-                        <span data-lang="ja">数百回の探索、<br>たった一つの推薦</span>
-                        <span data-lang="en">Hundreds of searches,<br>one perfect match</span>
-                    </h3>
-                    <p>
-                        <span data-lang="ko" class="active">MatchHz는 매칭 전 수백 명의 프로필을 분석합니다. 하지만 당신에게는 가장 어울리는 한 사람만 소개합니다. 선택 피로? 여기엔 없습니다.</span>
-                        <span data-lang="ja">MatchHzはマッチング前に数百のプロフィールを分析します。しかし、あなたには最も相性の良い一人だけを紹介します。選択疲れ？ここにはありません。</span>
-                        <span data-lang="en">MatchHz analyzes hundreds of profiles before each match. But we only introduce the one person who fits best. Choice fatigue? Not here.</span>
-                    </p>
-                    <ul class="feature-list">
-                        <li data-lang="ko" class="active">300+ 호환성 포인트 분석</li>
-                        <li data-lang="ko" class="active">질 높은 소수 매칭</li>
-                        <li data-lang="ko" class="active">지속적인 학습 & 개선</li>
-                        <li data-lang="ja">300+互換性ポイント分析</li>
-                        <li data-lang="ja">質の高い少数マッチング</li>
-                        <li data-lang="ja">継続的な学習&改善</li>
-                        <li data-lang="en">300+ compatibility points analyzed</li>
-                        <li data-lang="en">Quality over quantity matching</li>
-                        <li data-lang="en">Continuous learning & improvement</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="testimonials">
+    <section class="testimonials-section">
         <div class="container">
             <div class="testimonials-header">
                 <p class="section-label">
-                    <span data-lang="ko" class="active">베타 테스터 후기</span>
-                    <span data-lang="ja">ベータテスターの声</span>
-                    <span data-lang="en">Beta Tester Reviews</span>
+                    <span data-lang="ko" class="active">후기</span>
+                    <span data-lang="ja">レビュー</span>
+                    <span data-lang="en">Testimonials</span>
                 </p>
                 <h2 class="section-title">
-                    <span data-lang="ko" class="active">이미 시작된 이야기들</span>
-                    <span data-lang="ja">すでに始まった物語</span>
-                    <span data-lang="en">Stories Already Unfolding</span>
+                    <span data-lang="ko" class="active">베타 테스터들의 이야기</span>
+                    <span data-lang="ja">ベータテスターの声</span>
+                    <span data-lang="en">Beta tester stories</span>
                 </h2>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
                     <p>
-                        <span data-lang="ko" class="active">"처음 만났는데 마치 오랜 친구 같았어요. 대화가 끊기지 않았고, 3시간이 10분처럼 느껴졌어요."</span>
-                        <span data-lang="ja">"初めて会ったのに、まるで古い友人のようでした。会話が途切れず、3時間が10分のように感じました。"</span>
-                        <span data-lang="en">"We'd just met but it felt like we'd known each other forever. The conversation flowed, and 3 hours felt like 10 minutes."</span>
+                        <span data-lang="ko" class="active">"처음 만났는데 마치 오래된 친구 같았어요. 대화가 정말 자연스럽게 흘러갔고, 3시간이 10분처럼 느껴졌어요."</span>
+                        <span data-lang="ja">"初めて会ったのに、まるで古い友人のようでした。会話が本当に自然に流れて、3時間が10分のように感じました。"</span>
+                        <span data-lang="en">"We'd just met but it felt like old friends. Conversation flowed naturally, 3 hours felt like 10 minutes."</span>
                     </p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">J</div>
@@ -1001,10 +1595,11 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
                     <p>
-                        <span data-lang="ko" class="active">"다른 앱에서 6개월 동안 못 찾은 걸 MatchHz에서 2주 만에 찾았어요. 진짜 통하는 사람을요."</span>
-                        <span data-lang="ja">"他のアプリで6ヶ月間見つからなかったものを、MatchHzで2週間で見つけました。本当に通じ合う人を。"</span>
-                        <span data-lang="en">"What I couldn't find on other apps in 6 months, I found on MatchHz in 2 weeks. Someone who actually gets me."</span>
+                        <span data-lang="ko" class="active">"6개월 동안 다른 앱에서 못 찾은 걸 MatchHz에서 2주 만에 찾았어요. 진짜 통하는 사람을요."</span>
+                        <span data-lang="ja">"6ヶ月間他のアプリで見つからなかったものを、MatchHzで2週間で見つけました。本当に通じ合う人を。"</span>
+                        <span data-lang="en">"What I couldn't find on other apps in 6 months, I found on MatchHz in 2 weeks. Someone who truly gets me."</span>
                     </p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">M</div>
@@ -1015,9 +1610,10 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
                     <p>
-                        <span data-lang="ko" class="active">"첫 대화 주제 추천이 정말 좋았어요. 어색함 없이 바로 깊은 대화로 들어갈 수 있었어요."</span>
-                        <span data-lang="ja">"最初の会話トピックの推薦が本当に良かったです。ぎこちなさなしにすぐ深い会話に入れました。"</span>
+                        <span data-lang="ko" class="active">"대화 주제 추천이 정말 좋았어요. 어색함 없이 바로 깊은 대화로 들어갈 수 있었어요."</span>
+                        <span data-lang="ja">"会話トピックの推薦が本当に良かったです。ぎこちなさなしにすぐ深い会話に入れました。"</span>
                         <span data-lang="en">"The conversation suggestions were perfect. We skipped the awkward phase and went straight to real talk."</span>
                     </p>
                     <div class="testimonial-author">
@@ -1032,7 +1628,121 @@
         </div>
     </section>
 
-    <section class="cta-section" id="waitlist">
+    <section class="pricing-section">
+        <div class="container">
+            <div class="pricing-header">
+                <p class="section-label">
+                    <span data-lang="ko" class="active">요금제</span>
+                    <span data-lang="ja">料金プラン</span>
+                    <span data-lang="en">Pricing</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="ko" class="active">심플한 요금제</span>
+                    <span data-lang="ja">シンプルな料金プラン</span>
+                    <span data-lang="en">Simple pricing</span>
+                </h2>
+                <p class="section-desc">
+                    <span data-lang="ko" class="active">사전 등록하면 프리미엄 3개월 무료!</span>
+                    <span data-lang="ja">事前登録でプレミアム3ヶ月無料！</span>
+                    <span data-lang="en">Sign up early for 3 months Premium free!</span>
+                </p>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">₩0<span>/월</span></div>
+                    <p class="price-note">
+                        <span data-lang="ko" class="active">기본 기능</span>
+                        <span data-lang="ja">基本機能</span>
+                        <span data-lang="en">Basic features</span>
+                    </p>
+                    <ul class="pricing-features">
+                        <li><span data-lang="ko" class="active">주 3회 매칭</span><span data-lang="ja">週3回マッチング</span><span data-lang="en">3 matches/week</span></li>
+                        <li><span data-lang="ko" class="active">기본 프로필</span><span data-lang="ja">基本プロフィール</span><span data-lang="en">Basic profile</span></li>
+                        <li><span data-lang="ko" class="active">대화 분석</span><span data-lang="ja">会話分析</span><span data-lang="en">Conversation analysis</span></li>
+                    </ul>
+                    <button class="pricing-btn secondary">
+                        <span data-lang="ko" class="active">출시 알림</span>
+                        <span data-lang="ja">リリース通知</span>
+                        <span data-lang="en">Get notified</span>
+                    </button>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Premium</h3>
+                    <div class="price">₩29,000<span>/월</span></div>
+                    <p class="price-note">
+                        <span data-lang="ko" class="active">가장 인기</span>
+                        <span data-lang="ja">最も人気</span>
+                        <span data-lang="en">Most popular</span>
+                    </p>
+                    <ul class="pricing-features">
+                        <li><span data-lang="ko" class="active">무제한 매칭</span><span data-lang="ja">無制限マッチング</span><span data-lang="en">Unlimited matches</span></li>
+                        <li><span data-lang="ko" class="active">실시간 대화 가이드</span><span data-lang="ja">リアルタイム会話ガイド</span><span data-lang="en">Real-time conversation guide</span></li>
+                        <li><span data-lang="ko" class="active">상세 호환성 리포트</span><span data-lang="ja">詳細互換性レポート</span><span data-lang="en">Detailed compatibility report</span></li>
+                        <li><span data-lang="ko" class="active">우선 매칭</span><span data-lang="ja">優先マッチング</span><span data-lang="en">Priority matching</span></li>
+                    </ul>
+                    <button class="pricing-btn primary" onclick="scrollTo('#cta')">
+                        <span data-lang="ko" class="active">3개월 무료 받기</span>
+                        <span data-lang="ja">3ヶ月無料で始める</span>
+                        <span data-lang="en">Get 3 months free</span>
+                    </button>
+                </div>
+                <div class="pricing-card">
+                    <h3>VIP</h3>
+                    <div class="price">₩79,000<span>/월</span></div>
+                    <p class="price-note">
+                        <span data-lang="ko" class="active">최고의 경험</span>
+                        <span data-lang="ja">最高の体験</span>
+                        <span data-lang="en">Ultimate experience</span>
+                    </p>
+                    <ul class="pricing-features">
+                        <li><span data-lang="ko" class="active">Premium 전체 기능</span><span data-lang="ja">Premium全機能</span><span data-lang="en">All Premium features</span></li>
+                        <li><span data-lang="ko" class="active">1:1 매칭 컨설턴트</span><span data-lang="ja">1:1マッチングコンサルタント</span><span data-lang="en">1:1 matching consultant</span></li>
+                        <li><span data-lang="ko" class="active">데이트 코칭</span><span data-lang="ja">デートコーチング</span><span data-lang="en">Date coaching</span></li>
+                        <li><span data-lang="ko" class="active">프로필 최적화 서비스</span><span data-lang="ja">プロフィール最適化サービス</span><span data-lang="en">Profile optimization</span></li>
+                    </ul>
+                    <button class="pricing-btn secondary">
+                        <span data-lang="ko" class="active">출시 알림</span>
+                        <span data-lang="ja">リリース通知</span>
+                        <span data-lang="en">Get notified</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-header">
+                <p class="section-label">FAQ</p>
+                <h2 class="section-title">
+                    <span data-lang="ko" class="active">자주 묻는 질문</span>
+                    <span data-lang="ja">よくある質問</span>
+                    <span data-lang="en">Frequently asked questions</span>
+                </h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3><span data-lang="ko" class="active">다른 데이팅 앱과 뭐가 다른가요?</span><span data-lang="ja">他のデーティングアプリと何が違いますか？</span><span data-lang="en">How is this different from other dating apps?</span></h3>
+                    <p><span data-lang="ko" class="active">기존 앱은 사진과 짧은 프로필로 판단합니다. MatchHz는 대화 스타일, 가치관, 유머 감각 등 300가지 이상의 요소를 분석해 진정으로 맞는 사람을 찾아드립니다.</span><span data-lang="ja">従来のアプリは写真と短いプロフィールで判断します。MatchHzは会話スタイル、価値観、ユーモアセンスなど300以上の要素を分析して本当に合う人を見つけます。</span><span data-lang="en">Traditional apps judge by photos and short bios. MatchHz analyzes 300+ factors including conversation style, values, and humor to find someone who truly fits.</span></p>
+                </div>
+                <div class="faq-item">
+                    <h3><span data-lang="ko" class="active">어떻게 저를 분석하나요?</span><span data-lang="ja">どうやって私を分析するのですか？</span><span data-lang="en">How do you analyze me?</span></h3>
+                    <p><span data-lang="ko" class="active">간단한 대화를 나누는 과정에서 자연스럽게 분석합니다. 지루한 설문지 대신, 재미있는 대화를 통해 당신의 성향을 파악합니다.</span><span data-lang="ja">簡単な会話をする過程で自然に分析します。退屈なアンケートの代わりに、楽しい会話を通じてあなたの傾向を把握します。</span><span data-lang="en">Through natural conversation, not boring questionnaires. We understand you through fun, engaging dialogue.</span></p>
+                </div>
+                <div class="faq-item">
+                    <h3><span data-lang="ko" class="active">개인정보는 안전한가요?</span><span data-lang="ja">個人情報は安全ですか？</span><span data-lang="en">Is my data safe?</span></h3>
+                    <p><span data-lang="ko" class="active">모든 데이터는 암호화되어 저장되며, 매칭 목적으로만 사용됩니다. 제3자와 공유하지 않으며, 언제든 삭제 요청이 가능합니다.</span><span data-lang="ja">すべてのデータは暗号化して保存され、マッチング目的でのみ使用されます。第三者と共有せず、いつでも削除要請が可能です。</span><span data-lang="en">All data is encrypted and used only for matching. Never shared with third parties. You can request deletion anytime.</span></p>
+                </div>
+                <div class="faq-item">
+                    <h3><span data-lang="ko" class="active">언제 출시되나요?</span><span data-lang="ja">いつリリースされますか？</span><span data-lang="en">When will you launch?</span></h3>
+                    <p><span data-lang="ko" class="active">2025년 하반기 출시 예정입니다. 사전 등록하시면 출시 시 가장 먼저 알려드리고, 3개월 프리미엄 무료 혜택도 드립니다.</span><span data-lang="ja">2025年下半期リリース予定です。事前登録いただければ、リリース時に真っ先にお知らせし、3ヶ月プレミアム無料特典も差し上げます。</span><span data-lang="en">Late 2025. Sign up early to be first notified and get 3 months Premium free.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="cta">
         <div class="container">
             <div class="cta-content">
                 <h2>
@@ -1041,19 +1751,19 @@
                     <span data-lang="en">Ready to find<br>your frequency?</span>
                 </h2>
                 <p>
-                    <span data-lang="ko" class="active">사전 등록하고 출시 소식을 가장 먼저 받아보세요.<br>Early bird 혜택도 놓치지 마세요.</span>
-                    <span data-lang="ja">事前登録してリリースニュースを真っ先に受け取ってください。<br>Early bird特典もお見逃しなく。</span>
-                    <span data-lang="en">Sign up for early access and be the first to know.<br>Don't miss exclusive early bird perks.</span>
+                    <span data-lang="ko" class="active">지금 사전 등록하고 출시 소식을 가장 먼저 받아보세요.<br>3개월 프리미엄 무료 혜택은 덤!</span>
+                    <span data-lang="ja">今すぐ事前登録してリリースニュースを真っ先に受け取りましょう。<br>3ヶ月プレミアム無料特典付き！</span>
+                    <span data-lang="en">Sign up now for early access and be the first to know.<br>Plus 3 months Premium free!</span>
                 </p>
                 <form class="cta-form" id="ctaForm">
                     <input type="email" class="hero-input" required id="ctaEmail">
                     <button type="submit" class="hero-btn" id="ctaBtn">
-                        <span data-lang="ko" class="active">사전 등록</span>
-                        <span data-lang="ja">事前登録</span>
-                        <span data-lang="en">Join Waitlist</span>
+                        <span data-lang="ko" class="active">무료 등록</span>
+                        <span data-lang="ja">無料登録</span>
+                        <span data-lang="en">Join Free</span>
                     </button>
                 </form>
-                <div class="success-msg" id="ctaSuccess" style="max-width: 480px; margin: 20px auto 0;">
+                <div class="success-msg" id="ctaSuccess" style="max-width: 480px; margin: 20px auto 0; background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3);">
                     <span data-lang="ko" class="active">🎉 등록 완료! 출시되면 가장 먼저 알려드릴게요.</span>
                     <span data-lang="ja">🎉 登録完了！リリース時に真っ先にお知らせします。</span>
                     <span data-lang="en">🎉 You're in! We'll notify you first when we launch.</span>
@@ -1064,19 +1774,13 @@
 
     <footer>
         <div class="container">
-            <p>© 2025 MatchHz. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">
-                    <span data-lang="ko" class="active">개인정보처리방침</span>
-                    <span data-lang="ja">プライバシーポリシー</span>
-                    <span data-lang="en">Privacy</span>
-                </a>
-                <a href="#">
-                    <span data-lang="ko" class="active">이용약관</span>
-                    <span data-lang="ja">利用規約</span>
-                    <span data-lang="en">Terms</span>
-                </a>
-                <a href="mailto:hello@matchhz.com">Contact</a>
+            <div class="footer-content">
+                <div class="footer-logo">Match<span class="gradient-text">Hz</span></div>
+                <div class="footer-links">
+                    <a href="#"><span data-lang="ko" class="active">개인정보처리방침</span><span data-lang="ja">プライバシーポリシー</span><span data-lang="en">Privacy</span></a>
+                    <a href="#"><span data-lang="ko" class="active">이용약관</span><span data-lang="ja">利用規約</span><span data-lang="en">Terms</span></a>
+                    <a href="mailto:hello@matchhz.com">Contact</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -1104,16 +1808,14 @@
             btn.addEventListener('click', () => setLanguage(btn.dataset.langBtn));
         });
 
-        // Detect language
         const browserLang = navigator.language.slice(0, 2);
         if (['ko', 'ja'].includes(browserLang)) setLanguage(browserLang);
-        else if (browserLang !== 'ko') setLanguage('en');
+        else setLanguage('en');
 
-        // Nav scroll
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 50);
-        });
+        // Scroll
+        function scrollTo(selector) {
+            document.querySelector(selector).scrollIntoView({ behavior: 'smooth' });
+        }
 
         // Forms
         function handleForm(formId, btnId, successId) {
@@ -1136,20 +1838,14 @@
 
                 form.classList.add('hidden');
                 success.classList.add('show');
-
-                console.log('Registered:', email);
             });
         }
 
         handleForm('heroForm', 'heroBtn', 'heroSuccess');
         handleForm('ctaForm', 'ctaBtn', 'ctaSuccess');
 
-        function scrollToForm() {
-            document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Animate on scroll
-        const animateEls = document.querySelectorAll('.step-card, .feature-row, .testimonial-card, .stat-item');
+        // Animate
+        const animateEls = document.querySelectorAll('.problem-card, .solution-grid, .step-card, .tech-card, .testimonial-card, .pricing-card, .faq-item, .stat-item');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1161,8 +1857,8 @@
 
         animateEls.forEach(el => {
             el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(el);
         });
     </script>
