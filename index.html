@@ -1975,6 +1975,29 @@
             document.querySelector(selector).scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Supabase config
+        const SUPABASE_URL = 'https://avcxjowsucgvpyiiglja.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2Y3hqb3dzdWNndnB5aWlnbGphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExNzUxMTAsImV4cCI6MjA4Njc1MTExMH0.TMq73ipwPq8DKFSzuQ11a9O1f0DHO8LwA4L-d9JjFJk';
+
+        async function saveToWaitlist(email, lang) {
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ email, lang })
+                });
+                return res.ok || res.status === 409; // 409 = duplicate, still success
+            } catch (err) {
+                console.error('Waitlist save error:', err);
+                return false;
+            }
+        }
+
         // Forms
         function handleForm(formId, btnId, successId) {
             const form = document.getElementById(formId);
@@ -1988,14 +2011,16 @@
                 btn.classList.add('btn-loading');
                 btn.disabled = true;
 
-                await new Promise(r => setTimeout(r, 1500));
-
-                const list = JSON.parse(localStorage.getItem('matchhz_waitlist') || '[]');
-                list.push({ email, ts: new Date().toISOString(), lang: document.documentElement.lang });
-                localStorage.setItem('matchhz_waitlist', JSON.stringify(list));
-
-                form.classList.add('hidden');
-                success.classList.add('show');
+                const saved = await saveToWaitlist(email, document.documentElement.lang);
+                
+                if (saved) {
+                    form.classList.add('hidden');
+                    success.classList.add('show');
+                } else {
+                    btn.classList.remove('btn-loading');
+                    btn.disabled = false;
+                    alert('Something went wrong. Please try again.');
+                }
             });
         }
 
