@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatchHz — Your frequency, perfectly matched</title>
+    <title>MatchHz — 당신의 주파수에 맞는 사람</title>
+    <meta name="description" content="수백 번의 스와이프 대신, 단 한 번의 완벽한 매칭. MatchHz가 당신의 이상형을 찾아드립니다.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,14 +16,16 @@
         }
 
         :root {
-            --bg: #000000;
-            --surface: #0a0a0a;
-            --surface-2: #141414;
-            --text: #ffffff;
-            --text-dim: #666666;
-            --accent: #ff3366;
-            --accent-2: #6633ff;
-            --gradient: linear-gradient(135deg, #ff3366 0%, #6633ff 100%);
+            --black: #000000;
+            --dark: #0a0a0a;
+            --dark-2: #111111;
+            --dark-3: #1a1a1a;
+            --white: #ffffff;
+            --gray: #888888;
+            --gray-light: #cccccc;
+            --accent: #ff2d55;
+            --accent-2: #af52de;
+            --gradient: linear-gradient(135deg, #ff2d55 0%, #af52de 50%, #5856d6 100%);
         }
 
         html {
@@ -30,26 +33,26 @@
         }
 
         body {
-            font-family: 'Inter', 'Noto Sans KR', 'Noto Sans JP', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Outfit', 'Noto Sans KR', 'Noto Sans JP', -apple-system, sans-serif;
+            background: var(--black);
+            color: var(--white);
             line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Noise texture */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-            z-index: 1000;
+        /* Utility */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Navigation */
@@ -58,42 +61,50 @@
             top: 0;
             left: 0;
             right: 0;
-            padding: 1.5rem 3rem;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: background 0.3s, backdrop-filter 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        nav .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 24px;
             font-weight: 700;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.5px;
         }
 
-        .logo span {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .lang-switcher {
+        .nav-right {
             display: flex;
-            gap: 0.25rem;
-            background: var(--surface-2);
-            padding: 0.25rem;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 4px;
+            background: var(--dark-2);
+            padding: 4px;
             border-radius: 8px;
         }
 
         .lang-btn {
-            padding: 0.5rem 1rem;
-            font-size: 0.75rem;
+            padding: 8px 12px;
+            font-size: 13px;
             font-weight: 500;
             background: transparent;
             border: none;
-            color: var(--text-dim);
+            color: var(--gray);
             cursor: pointer;
             border-radius: 6px;
             transition: all 0.2s;
@@ -101,339 +112,447 @@
         }
 
         .lang-btn.active {
-            background: var(--surface);
-            color: var(--text);
+            background: var(--dark-3);
+            color: var(--white);
         }
 
-        .lang-btn:hover:not(.active) {
-            color: var(--text);
+        .nav-cta {
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            background: var(--white);
+            color: var(--black);
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: inherit;
         }
 
-        /* Hero */
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 45, 85, 0.3);
+        }
+
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 6rem 2rem;
             position: relative;
-            text-align: center;
-        }
-
-        /* Animated gradient orbs */
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 51, 102, 0.15) 0%, transparent 70%);
-            top: 10%;
-            left: 10%;
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(102, 51, 255, 0.15) 0%, transparent 70%);
-            bottom: 10%;
-            right: 10%;
-            animation: pulse 8s ease-in-out infinite reverse;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 900px;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--surface-2);
-            border: 1px solid #222;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .badge::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .headline {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 1.05;
-            margin-bottom: 1.5rem;
-        }
-
-        .headline .gradient {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .subheadline {
-            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-            color: var(--text-dim);
-            font-weight: 300;
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            line-height: 1.6;
-        }
-
-        /* Form */
-        .form-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .input-row {
-            display: flex;
-            width: 100%;
-            background: var(--surface);
-            border: 1px solid #222;
-            border-radius: 16px;
+            padding: 120px 0 80px;
             overflow: hidden;
-            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        .input-row:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(255, 51, 102, 0.1);
-        }
-
-        .email-input {
-            flex: 1;
-            padding: 1.25rem 1.5rem;
-            font-size: 1rem;
-            font-family: inherit;
-            background: transparent;
-            border: none;
-            color: var(--text);
-            outline: none;
-        }
-
-        .email-input::placeholder {
-            color: var(--text-dim);
-        }
-
-        .submit-btn {
-            padding: 1.25rem 2rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            font-family: inherit;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.2s;
-            white-space: nowrap;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .submit-btn:hover {
-            opacity: 0.9;
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        .form-note {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        /* Success */
-        .success-state {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            padding: 2rem;
-            background: var(--surface);
-            border: 1px solid #222;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .success-state.show {
-            display: flex;
-        }
-
-        .success-state svg {
-            width: 48px;
-            height: 48px;
-            color: #00ff88;
-        }
-
-        .success-state p {
-            color: var(--text-dim);
-            text-align: center;
-        }
-
-        .form-wrapper.submitted .input-row,
-        .form-wrapper.submitted .form-note {
-            display: none;
-        }
-
-        /* Scroll indicator */
-        .scroll-indicator {
+        .hero-bg {
             position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-dim);
-            font-size: 0.75rem;
-            animation: bounce 2s infinite;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
         }
 
-        /* Features */
-        .features {
-            padding: 8rem 2rem;
-            background: var(--surface);
-        }
-
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .feature-card {
-            padding: 3rem 2rem;
-            background: var(--bg);
-            border: 1px solid #1a1a1a;
-            border-radius: 24px;
-            text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: #333;
-        }
-
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 1.5rem;
-            background: var(--gradient);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-        }
-
-        .feature-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .feature-desc {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-            line-height: 1.6;
-        }
-
-        /* Stats */
-        .stats {
-            padding: 6rem 2rem;
-            text-align: center;
-        }
-
-        .stats-grid {
-            max-width: 800px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-        }
-
-        .stat-item {
-            padding: 2rem;
-        }
-
-        .stat-value {
-            font-size: 4rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        /* CTA */
-        .cta {
-            padding: 8rem 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .cta::before {
+        .hero-bg::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(255, 51, 102, 0.1) 0%, transparent 70%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 720px;
+        }
+
+        .coming-soon-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 45, 85, 0.1);
+            border: 1px solid rgba(255, 45, 85, 0.3);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .coming-soon-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 72px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 2.5vw, 22px);
+            color: var(--gray-light);
+            font-weight: 400;
+            line-height: 1.6;
+            margin-bottom: 48px;
+            max-width: 560px;
+        }
+
+        .hero-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+        }
+
+        .hero-input {
+            flex: 1;
+            padding: 18px 24px;
+            font-size: 16px;
+            font-family: inherit;
+            background: var(--dark-2);
+            border: 1px solid var(--dark-3);
+            border-radius: 16px;
+            color: var(--white);
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .hero-input::placeholder {
+            color: var(--gray);
+        }
+
+        .hero-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(255, 45, 85, 0.1);
+        }
+
+        .hero-btn {
+            padding: 18px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            background: var(--gradient);
+            color: var(--white);
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(255, 45, 85, 0.3);
+        }
+
+        .hero-note {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .success-msg {
+            display: none;
+            padding: 20px 24px;
+            background: rgba(52, 199, 89, 0.1);
+            border: 1px solid rgba(52, 199, 89, 0.3);
+            border-radius: 16px;
+            color: #34c759;
+            font-size: 15px;
+        }
+
+        .success-msg.show {
+            display: block;
+        }
+
+        .hero-form.hidden {
+            display: none;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            padding: 60px 0;
+            border-top: 1px solid var(--dark-3);
+            border-bottom: 1px solid var(--dark-3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-item p {
+            font-size: 14px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 120px 0;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
+        }
+
+        .section-desc {
+            font-size: 18px;
+            color: var(--gray-light);
+            max-width: 600px;
+            margin-bottom: 64px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .step-card {
+            padding: 40px 32px;
+            background: var(--dark);
+            border: 1px solid var(--dark-3);
+            border-radius: 24px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: var(--gradient);
+            border-radius: 14px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .step-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .step-card p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Feature Section */
+        .feature-section {
+            padding: 120px 0;
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+
+        .feature-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-row.reverse {
+            direction: rtl;
+        }
+
+        .feature-row.reverse > * {
+            direction: ltr;
+        }
+
+        .feature-image {
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .feature-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .feature-content h3 {
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+        }
+
+        .feature-content p {
+            font-size: 17px;
+            color: var(--gray-light);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--gray-light);
+            margin-bottom: 12px;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: rgba(52, 199, 89, 0.2);
+            color: #34c759;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 120px 0;
+            background: var(--dark);
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            padding: 32px;
+            background: var(--dark-2);
+            border: 1px solid var(--dark-3);
+            border-radius: 20px;
+        }
+
+        .testimonial-card p {
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            color: var(--gray-light);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .testimonial-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .testimonial-info span {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 160px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 45, 85, 0.15) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .cta-content {
@@ -441,62 +560,144 @@
             z-index: 10;
         }
 
-        .cta-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+        .cta-section h2 {
+            font-size: clamp(36px, 6vw, 56px);
             font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            margin-bottom: 24px;
         }
 
-        .cta-sub {
-            color: var(--text-dim);
-            margin-bottom: 2rem;
-            font-size: 1.125rem;
+        .cta-section p {
+            font-size: 18px;
+            color: var(--gray-light);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
         }
 
         /* Footer */
         footer {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 1px solid #111;
+            padding: 40px 0;
+            border-top: 1px solid var(--dark-3);
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         footer p {
-            font-size: 0.75rem;
-            color: var(--text-dim);
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem 1.5rem;
-            }
-
-            .features-grid,
+        @media (max-width: 1024px) {
             .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
             }
 
-            .input-row {
+            .feature-row {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .feature-row.reverse {
+                direction: ltr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-right {
+                gap: 16px;
+            }
+
+            .nav-cta {
+                display: none;
+            }
+
+            .hero-form {
                 flex-direction: column;
-                border-radius: 12px;
             }
 
-            .submit-btn {
-                border-radius: 0 0 12px 12px;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
             }
 
-            .email-input {
+            .stat-item h3 {
+                font-size: 36px;
+            }
+
+            .cta-form {
+                flex-direction: column;
+            }
+
+            footer .container {
+                flex-direction: column;
+                gap: 20px;
                 text-align: center;
             }
         }
 
+        /* Lang support */
+        [data-lang] { display: none; }
+        [data-lang].active { display: block; }
+        span[data-lang].active, 
+        h1 [data-lang].active,
+        h2 [data-lang].active,
+        h3 [data-lang].active,
+        p [data-lang].active,
+        button [data-lang].active { display: inline; }
+        li[data-lang].active { display: flex; }
+
         /* Loading */
-        .loading {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
+        .btn-loading {
+            position: relative;
+            color: transparent !important;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
             border: 2px solid transparent;
             border-top-color: white;
             border-radius: 50%;
@@ -506,317 +707,463 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        /* Hide elements by language */
-        [data-lang] { display: none; }
-        [data-lang].active { display: block; }
-        span[data-lang].active { display: inline; }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">Match<span>Hz</span></div>
-        <div class="lang-switcher">
-            <button class="lang-btn active" data-lang-btn="ko">한국어</button>
-            <button class="lang-btn" data-lang-btn="ja">日本語</button>
-            <button class="lang-btn" data-lang-btn="en">EN</button>
+    <nav id="nav">
+        <div class="container">
+            <div class="logo">Match<span class="gradient-text">Hz</span></div>
+            <div class="nav-right">
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang-btn="ko">한국어</button>
+                    <button class="lang-btn" data-lang-btn="ja">日本語</button>
+                    <button class="lang-btn" data-lang-btn="en">EN</button>
+                </div>
+                <button class="nav-cta" onclick="scrollToForm()">
+                    <span data-lang="ko" class="active">사전 등록</span>
+                    <span data-lang="ja">事前登録</span>
+                    <span data-lang="en">Join Waitlist</span>
+                </button>
+            </div>
         </div>
     </nav>
 
     <section class="hero">
-        <div class="hero-content">
-            <div class="badge">
-                <span data-lang="ko" class="active">2028년 출시 예정</span>
-                <span data-lang="ja">2028年リリース予定</span>
-                <span data-lang="en">Coming 2028</span>
-            </div>
-            
-            <h1 class="headline">
-                <span data-lang="ko" class="active">
-                    당신보다<br>
-                    <span class="gradient">당신을</span> 더 잘 아는<br>
-                    에이전트
-                </span>
-                <span data-lang="ja">
-                    あなたより<br>
-                    <span class="gradient">あなたを</span>知る<br>
-                    エージェント
-                </span>
-                <span data-lang="en">
-                    An agent that<br>
-                    knows <span class="gradient">you</span><br>
-                    better than you
-                </span>
-            </h1>
-
-            <p class="subheadline">
-                <span data-lang="ko" class="active">
-                    완벽한 타이밍. 완벽한 대화. 완벽한 주파수.<br>
-                    에이전트가 당신의 이상형을 찾아냅니다.
-                </span>
-                <span data-lang="ja">
-                    完璧なタイミング。完璧な会話。完璧な周波数。<br>
-                    エージェントがあなたの理想を見つけます。
-                </span>
-                <span data-lang="en">
-                    Perfect timing. Perfect conversation. Perfect frequency.<br>
-                    Your agent finds your perfect match.
-                </span>
-            </p>
-
-            <div class="form-wrapper" id="formWrapper">
-                <form class="input-row" id="waitlistForm">
-                    <input 
-                        type="email" 
-                        class="email-input" 
-                        required
-                        id="emailInput"
-                    >
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <span data-lang="ko" class="active">얼리 액세스</span>
-                        <span data-lang="ja">早期アクセス</span>
-                        <span data-lang="en">Early Access</span>
+        <div class="hero-bg">
+            <img src="images/hero.png" alt="">
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="coming-soon-badge">
+                    <span data-lang="ko" class="active">2025년 하반기 출시</span>
+                    <span data-lang="ja">2025年下半期リリース</span>
+                    <span data-lang="en">Launching Late 2025</span>
+                </div>
+                <h1>
+                    <span data-lang="ko" class="active">
+                        수백 번의 스와이프 대신,<br>
+                        <span class="gradient-text">단 한 번</span>의 완벽한 만남
+                    </span>
+                    <span data-lang="ja">
+                        何百回ものスワイプの代わりに、<br>
+                        <span class="gradient-text">たった一度</span>の完璧な出会い
+                    </span>
+                    <span data-lang="en">
+                        Skip the endless swiping.<br>
+                        Find your <span class="gradient-text">perfect match</span>.
+                    </span>
+                </h1>
+                <p class="hero-subtitle">
+                    <span data-lang="ko" class="active">MatchHz는 당신의 대화 스타일, 관심사, 가치관을 분석해 진정으로 어울리는 사람을 찾아드립니다. 피상적인 프로필이 아닌, 깊은 연결을 위한 새로운 방식.</span>
+                    <span data-lang="ja">MatchHzはあなたの会話スタイル、興味、価値観を分析し、本当に合う人を見つけます。表面的なプロフィールではなく、深いつながりのための新しい方法。</span>
+                    <span data-lang="en">MatchHz analyzes your conversation style, interests, and values to find someone who truly gets you. Not shallow profiles—real connection.</span>
+                </p>
+                <form class="hero-form" id="heroForm">
+                    <input type="email" class="hero-input" required id="heroEmail">
+                    <button type="submit" class="hero-btn" id="heroBtn">
+                        <span data-lang="ko" class="active">알림 받기</span>
+                        <span data-lang="ja">通知を受ける</span>
+                        <span data-lang="en">Notify Me</span>
                     </button>
                 </form>
-                <p class="form-note">
-                    <span data-lang="ko" class="active">스팸 없음 · 출시 시 알림</span>
-                    <span data-lang="ja">スパムなし · リリース時に通知</span>
-                    <span data-lang="en">No spam · Notify on launch</span>
+                <p class="hero-note">
+                    <span data-lang="ko" class="active">✨ 사전 등록자에게 3개월 무료 이용권 제공</span>
+                    <span data-lang="ja">✨ 事前登録者に3ヶ月無料利用券を提供</span>
+                    <span data-lang="en">✨ Early access members get 3 months free</span>
                 </p>
-                <div class="success-state" id="successState">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                        <polyline points="22 4 12 14.01 9 11.01"/>
-                    </svg>
+                <div class="success-msg" id="heroSuccess">
+                    <span data-lang="ko" class="active">🎉 등록 완료! 출시되면 가장 먼저 알려드릴게요.</span>
+                    <span data-lang="ja">🎉 登録完了！リリース時に真っ先にお知らせします。</span>
+                    <span data-lang="en">🎉 You're in! We'll notify you first when we launch.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 class="gradient-text">92%</h3>
                     <p>
-                        <span data-lang="ko" class="active">등록 완료. 주파수가 맞으면 연락드리겠습니다.</span>
-                        <span data-lang="ja">登録完了。周波数が合えばご連絡します。</span>
-                        <span data-lang="en">Registered. We'll reach out when our frequencies align.</span>
+                        <span data-lang="ko" class="active">매칭 만족도</span>
+                        <span data-lang="ja">マッチング満足度</span>
+                        <span data-lang="en">Match Satisfaction</span>
+                    </p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="gradient-text">3.2x</h3>
+                    <p>
+                        <span data-lang="ko" class="active">더 긴 대화 지속</span>
+                        <span data-lang="ja">より長い会話継続</span>
+                        <span data-lang="en">Longer Conversations</span>
+                    </p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="gradient-text">78%</h3>
+                    <p>
+                        <span data-lang="ko" class="active">2회 이상 만남</span>
+                        <span data-lang="ja">2回以上の出会い</span>
+                        <span data-lang="en">Second Date Rate</span>
+                    </p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="gradient-text">4.9</h3>
+                    <p>
+                        <span data-lang="ko" class="active">베타 테스터 평점</span>
+                        <span data-lang="ja">ベータテスター評価</span>
+                        <span data-lang="en">Beta Tester Rating</span>
                     </p>
                 </div>
             </div>
         </div>
-
-        <div class="scroll-indicator">
-            <span data-lang="ko" class="active">스크롤</span>
-            <span data-lang="ja">スクロール</span>
-            <span data-lang="en">Scroll</span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 5v14M19 12l-7 7-7-7"/>
-            </svg>
-        </div>
     </section>
 
-    <section class="features">
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3 class="feature-title">
-                    <span data-lang="ko" class="active">실시간 코칭</span>
-                    <span data-lang="ja">リアルタイムコーチング</span>
-                    <span data-lang="en">Real-time Coaching</span>
-                </h3>
-                <p class="feature-desc">
-                    <span data-lang="ko" class="active">
-                        대화가 정체될 때, 에이전트가 최적의 화제를 제안합니다.<br>
-                        미소 2.5초. 끄덕임. 완벽한 타이밍.
-                    </span>
-                    <span data-lang="ja">
-                        会話が停滞したとき、エージェントが最適な話題を提案。<br>
-                        微笑み2.5秒。うなずき。完璧なタイミング。
-                    </span>
-                    <span data-lang="en">
-                        When conversation stalls, your agent suggests the perfect topic.<br>
-                        2.5 second smile. Nod. Perfect timing.
-                    </span>
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🤖</div>
-                <h3 class="feature-title">
-                    <span data-lang="ko" class="active">대리 데이트</span>
-                    <span data-lang="ja">代理デート</span>
-                    <span data-lang="en">Proxy Dating</span>
-                </h3>
-                <p class="feature-desc">
-                    <span data-lang="ko" class="active">
-                        바쁜 당신을 위해 에이전트가 대신 만납니다.<br>
-                        당신의 얼굴, 당신의 목소리, 더 나은 당신.
-                    </span>
-                    <span data-lang="ja">
-                        忙しいあなたの代わりにエージェントが会います。<br>
-                        あなたの顔、あなたの声、より良いあなた。
-                    </span>
-                    <span data-lang="en">
-                        Too busy? Your agent meets them instead.<br>
-                        Your face, your voice, a better you.
-                    </span>
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💫</div>
-                <h3 class="feature-title">
-                    <span data-lang="ko" class="active">VR 동기화</span>
-                    <span data-lang="ja">VR同期</span>
-                    <span data-lang="en">VR Sync</span>
-                </h3>
-                <p class="feature-desc">
-                    <span data-lang="ko" class="active">
-                        물리적 거리는 문제가 아닙니다.<br>
-                        헤드셋을 쓰세요. 나머지는 에이전트가.
-                    </span>
-                    <span data-lang="ja">
-                        物理的な距離は問題ではありません。<br>
-                        ヘッドセットを。残りはエージェントが。
-                    </span>
-                    <span data-lang="en">
-                        Physical distance is not a problem.<br>
-                        Put on the headset. Agent handles the rest.
-                    </span>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-value">92%</div>
-                <div class="stat-label">
-                    <span data-lang="ko" class="active">평균 적합도</span>
-                    <span data-lang="ja">平均適合度</span>
-                    <span data-lang="en">Avg Match Rate</span>
-                </div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">387</div>
-                <div class="stat-label">
-                    <span data-lang="ko" class="active">상호 탐색</span>
-                    <span data-lang="ja">相互探索</span>
-                    <span data-lang="en">Cross Searches</span>
-                </div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">2.5s</div>
-                <div class="stat-label">
-                    <span data-lang="ko" class="active">최적 반응 시간</span>
-                    <span data-lang="ja">最適反応時間</span>
-                    <span data-lang="en">Optimal Response</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta">
-        <div class="cta-content">
-            <h2 class="cta-title">
-                <span data-lang="ko" class="active">당신의 주파수를 찾을 준비가 됐나요?</span>
-                <span data-lang="ja">あなたの周波数を見つける準備はできましたか？</span>
-                <span data-lang="en">Ready to find your frequency?</span>
-            </h2>
-            <p class="cta-sub">
-                <span data-lang="ko" class="active">2028년, 연애의 새로운 패러다임</span>
-                <span data-lang="ja">2028年、恋愛の新しいパラダイム</span>
-                <span data-lang="en">2028. A new paradigm in dating.</span>
+    <section class="how-it-works">
+        <div class="container">
+            <p class="section-label">
+                <span data-lang="ko" class="active">어떻게 작동하나요</span>
+                <span data-lang="ja">どのように機能するか</span>
+                <span data-lang="en">How It Works</span>
             </p>
+            <h2 class="section-title">
+                <span data-lang="ko" class="active">3단계로 만나는 인연</span>
+                <span data-lang="ja">3ステップで出会う運命</span>
+                <span data-lang="en">Three Steps to Connection</span>
+            </h2>
+            <p class="section-desc">
+                <span data-lang="ko" class="active">복잡한 설정 없이, 자연스럽게 당신을 이해하고 최적의 상대를 찾아드립니다.</span>
+                <span data-lang="ja">複雑な設定なしで、自然にあなたを理解し、最適な相手を見つけます。</span>
+                <span data-lang="en">No complicated setup. We naturally learn who you are and find your ideal match.</span>
+            </p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>
+                        <span data-lang="ko" class="active">자연스러운 대화</span>
+                        <span data-lang="ja">自然な会話</span>
+                        <span data-lang="en">Natural Conversation</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">설문지 대신 자연스러운 대화를 나눕니다. 취향, 유머 감각, 대화 스타일까지 — 진짜 당신을 파악합니다.</span>
+                        <span data-lang="ja">アンケートの代わりに自然な会話をします。趣味、ユーモアセンス、会話スタイルまで — 本当のあなたを把握します。</span>
+                        <span data-lang="en">Instead of questionnaires, we have real conversations. Your humor, your style, your vibe — we get the real you.</span>
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>
+                        <span data-lang="ko" class="active">주파수 매칭</span>
+                        <span data-lang="ja">周波数マッチング</span>
+                        <span data-lang="en">Frequency Matching</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">수백 가지 요소를 분석해 당신과 '주파수'가 맞는 사람을 찾습니다. 겉모습이 아닌 본질적인 궁합.</span>
+                        <span data-lang="ja">数百の要素を分析し、あなたと「周波数」が合う人を見つけます。外見ではなく本質的な相性。</span>
+                        <span data-lang="en">We analyze hundreds of factors to find people on your 'frequency'. Not looks — genuine compatibility.</span>
+                    </p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>
+                        <span data-lang="ko" class="active">의미 있는 만남</span>
+                        <span data-lang="ja">意味のある出会い</span>
+                        <span data-lang="en">Meaningful Dates</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">적합도 높은 매칭만 소개합니다. 어색한 첫 만남? 걱정 마세요. 대화 가이드까지 제공합니다.</span>
+                        <span data-lang="ja">適合度の高いマッチングだけを紹介します。ぎこちない初対面？心配無用。会話ガイドも提供します。</span>
+                        <span data-lang="en">We only introduce high-compatibility matches. Awkward first dates? We've got conversation guides for that.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-section">
+        <div class="container">
+            <div class="feature-row">
+                <div class="feature-image">
+                    <img src="images/lifestyle1.png" alt="Real connection">
+                </div>
+                <div class="feature-content">
+                    <h3>
+                        <span data-lang="ko" class="active">프로필 사진이 아닌,<br>진짜 연결</span>
+                        <span data-lang="ja">プロフィール写真ではなく、<br>本当のつながり</span>
+                        <span data-lang="en">Real connection,<br>not profile pics</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">기존 데이팅 앱은 사진으로 판단합니다. MatchHz는 다릅니다. 대화 패턴, 유머 코드, 가치관 — 눈에 보이지 않는 것들로 매칭합니다.</span>
+                        <span data-lang="ja">従来のデーティングアプリは写真で判断します。MatchHzは違います。会話パターン、ユーモアコード、価値観 — 目に見えないもので​マッチングします。</span>
+                        <span data-lang="en">Traditional apps judge by photos. MatchHz is different. We match on conversation patterns, humor, values — the things that actually matter.</span>
+                    </p>
+                    <ul class="feature-list">
+                        <li data-lang="ko" class="active">대화 스타일 분석</li>
+                        <li data-lang="ko" class="active">가치관 & 라이프스타일 매칭</li>
+                        <li data-lang="ko" class="active">유머 궁합 측정</li>
+                        <li data-lang="ja">会話スタイル分析</li>
+                        <li data-lang="ja">価値観&ライフスタイルマッチング</li>
+                        <li data-lang="ja">ユーモア相性測定</li>
+                        <li data-lang="en">Conversation style analysis</li>
+                        <li data-lang="en">Values & lifestyle matching</li>
+                        <li data-lang="en">Humor compatibility scoring</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-row reverse">
+                <div class="feature-image">
+                    <img src="images/feature1.png" alt="Smart assistance">
+                </div>
+                <div class="feature-content">
+                    <h3>
+                        <span data-lang="ko" class="active">첫 대화,<br>더 이상 어렵지 않게</span>
+                        <span data-lang="ja">最初の会話、<br>もう難しくない</span>
+                        <span data-lang="en">First conversations,<br>made easy</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">"뭐라고 말해야 하지?" 더 이상 고민하지 마세요. 상대의 관심사와 대화 스타일에 맞는 화제를 제안해 드립니다. 자연스럽게, 당신답게.</span>
+                        <span data-lang="ja">「何を話せばいいの？」もう悩まないでください。相手の関心事と会話スタイルに合ったトピックを提案します。自然に、あなたらしく。</span>
+                        <span data-lang="en">"What should I say?" Stop worrying. We suggest topics based on their interests and conversation style. Natural, authentic, you.</span>
+                    </p>
+                    <ul class="feature-list">
+                        <li data-lang="ko" class="active">맞춤형 대화 주제 추천</li>
+                        <li data-lang="ko" class="active">실시간 분위기 파악</li>
+                        <li data-lang="ko" class="active">자연스러운 후속 질문 제안</li>
+                        <li data-lang="ja">カスタマイズされた会話トピック推薦</li>
+                        <li data-lang="ja">リアルタイム雰囲気把握</li>
+                        <li data-lang="ja">自然なフォローアップ質問提案</li>
+                        <li data-lang="en">Personalized topic suggestions</li>
+                        <li data-lang="en">Real-time vibe reading</li>
+                        <li data-lang="en">Natural follow-up prompts</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-row">
+                <div class="feature-image">
+                    <img src="images/algorithm.png" alt="Advanced matching">
+                </div>
+                <div class="feature-content">
+                    <h3>
+                        <span data-lang="ko" class="active">수백 번의 탐색,<br>단 하나의 추천</span>
+                        <span data-lang="ja">数百回の探索、<br>たった一つの推薦</span>
+                        <span data-lang="en">Hundreds of searches,<br>one perfect match</span>
+                    </h3>
+                    <p>
+                        <span data-lang="ko" class="active">MatchHz는 매칭 전 수백 명의 프로필을 분석합니다. 하지만 당신에게는 가장 어울리는 한 사람만 소개합니다. 선택 피로? 여기엔 없습니다.</span>
+                        <span data-lang="ja">MatchHzはマッチング前に数百のプロフィールを分析します。しかし、あなたには最も相性の良い一人だけを紹介します。選択疲れ？ここにはありません。</span>
+                        <span data-lang="en">MatchHz analyzes hundreds of profiles before each match. But we only introduce the one person who fits best. Choice fatigue? Not here.</span>
+                    </p>
+                    <ul class="feature-list">
+                        <li data-lang="ko" class="active">300+ 호환성 포인트 분석</li>
+                        <li data-lang="ko" class="active">질 높은 소수 매칭</li>
+                        <li data-lang="ko" class="active">지속적인 학습 & 개선</li>
+                        <li data-lang="ja">300+互換性ポイント分析</li>
+                        <li data-lang="ja">質の高い少数マッチング</li>
+                        <li data-lang="ja">継続的な学習&改善</li>
+                        <li data-lang="en">300+ compatibility points analyzed</li>
+                        <li data-lang="en">Quality over quantity matching</li>
+                        <li data-lang="en">Continuous learning & improvement</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <div class="testimonials-header">
+                <p class="section-label">
+                    <span data-lang="ko" class="active">베타 테스터 후기</span>
+                    <span data-lang="ja">ベータテスターの声</span>
+                    <span data-lang="en">Beta Tester Reviews</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="ko" class="active">이미 시작된 이야기들</span>
+                    <span data-lang="ja">すでに始まった物語</span>
+                    <span data-lang="en">Stories Already Unfolding</span>
+                </h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>
+                        <span data-lang="ko" class="active">"처음 만났는데 마치 오랜 친구 같았어요. 대화가 끊기지 않았고, 3시간이 10분처럼 느껴졌어요."</span>
+                        <span data-lang="ja">"初めて会ったのに、まるで古い友人のようでした。会話が途切れず、3時間が10分のように感じました。"</span>
+                        <span data-lang="en">"We'd just met but it felt like we'd known each other forever. The conversation flowed, and 3 hours felt like 10 minutes."</span>
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">J</div>
+                        <div class="testimonial-info">
+                            <h4>Jiwon, 28</h4>
+                            <span>Seoul</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>
+                        <span data-lang="ko" class="active">"다른 앱에서 6개월 동안 못 찾은 걸 MatchHz에서 2주 만에 찾았어요. 진짜 통하는 사람을요."</span>
+                        <span data-lang="ja">"他のアプリで6ヶ月間見つからなかったものを、MatchHzで2週間で見つけました。本当に通じ合う人を。"</span>
+                        <span data-lang="en">"What I couldn't find on other apps in 6 months, I found on MatchHz in 2 weeks. Someone who actually gets me."</span>
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">M</div>
+                        <div class="testimonial-info">
+                            <h4>Minho, 32</h4>
+                            <span>Busan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>
+                        <span data-lang="ko" class="active">"첫 대화 주제 추천이 정말 좋았어요. 어색함 없이 바로 깊은 대화로 들어갈 수 있었어요."</span>
+                        <span data-lang="ja">"最初の会話トピックの推薦が本当に良かったです。ぎこちなさなしにすぐ深い会話に入れました。"</span>
+                        <span data-lang="en">"The conversation suggestions were perfect. We skipped the awkward phase and went straight to real talk."</span>
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">S</div>
+                        <div class="testimonial-info">
+                            <h4>Soyeon, 26</h4>
+                            <span>Tokyo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="waitlist">
+        <div class="container">
+            <div class="cta-content">
+                <h2>
+                    <span data-lang="ko" class="active">당신의 주파수를<br>찾을 준비 됐나요?</span>
+                    <span data-lang="ja">あなたの周波数を<br>見つける準備はできましたか？</span>
+                    <span data-lang="en">Ready to find<br>your frequency?</span>
+                </h2>
+                <p>
+                    <span data-lang="ko" class="active">사전 등록하고 출시 소식을 가장 먼저 받아보세요.<br>Early bird 혜택도 놓치지 마세요.</span>
+                    <span data-lang="ja">事前登録してリリースニュースを真っ先に受け取ってください。<br>Early bird特典もお見逃しなく。</span>
+                    <span data-lang="en">Sign up for early access and be the first to know.<br>Don't miss exclusive early bird perks.</span>
+                </p>
+                <form class="cta-form" id="ctaForm">
+                    <input type="email" class="hero-input" required id="ctaEmail">
+                    <button type="submit" class="hero-btn" id="ctaBtn">
+                        <span data-lang="ko" class="active">사전 등록</span>
+                        <span data-lang="ja">事前登録</span>
+                        <span data-lang="en">Join Waitlist</span>
+                    </button>
+                </form>
+                <div class="success-msg" id="ctaSuccess" style="max-width: 480px; margin: 20px auto 0;">
+                    <span data-lang="ko" class="active">🎉 등록 완료! 출시되면 가장 먼저 알려드릴게요.</span>
+                    <span data-lang="ja">🎉 登録完了！リリース時に真っ先にお知らせします。</span>
+                    <span data-lang="en">🎉 You're in! We'll notify you first when we launch.</span>
+                </div>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>© 2028 MatchHz Inc. All rights reserved.</p>
+        <div class="container">
+            <p>© 2025 MatchHz. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">
+                    <span data-lang="ko" class="active">개인정보처리방침</span>
+                    <span data-lang="ja">プライバシーポリシー</span>
+                    <span data-lang="en">Privacy</span>
+                </a>
+                <a href="#">
+                    <span data-lang="ko" class="active">이용약관</span>
+                    <span data-lang="ja">利用規約</span>
+                    <span data-lang="en">Terms</span>
+                </a>
+                <a href="mailto:hello@matchhz.com">Contact</a>
+            </div>
+        </div>
     </footer>
 
     <script>
-        // Language switching
+        // Language
         const langBtns = document.querySelectorAll('.lang-btn');
         const langElements = document.querySelectorAll('[data-lang]');
-        const emailInput = document.getElementById('emailInput');
+        const inputs = document.querySelectorAll('.hero-input');
 
         const placeholders = {
-            ko: '이메일 주소를 입력하세요',
-            ja: 'メールアドレスを入力',
-            en: 'Enter your email'
+            ko: '이메일 주소',
+            ja: 'メールアドレス',
+            en: 'Your email'
         };
 
         function setLanguage(lang) {
-            langBtns.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.langBtn === lang);
-            });
-            
-            langElements.forEach(el => {
-                el.classList.toggle('active', el.dataset.lang === lang);
-            });
-
-            emailInput.placeholder = placeholders[lang];
+            langBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.langBtn === lang));
+            langElements.forEach(el => el.classList.toggle('active', el.dataset.lang === lang));
+            inputs.forEach(input => input.placeholder = placeholders[lang]);
             document.documentElement.lang = lang;
         }
 
         langBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                setLanguage(btn.dataset.langBtn);
-            });
+            btn.addEventListener('click', () => setLanguage(btn.dataset.langBtn));
         });
 
-        // Detect browser language
+        // Detect language
         const browserLang = navigator.language.slice(0, 2);
-        if (['ko', 'ja', 'en'].includes(browserLang)) {
-            setLanguage(browserLang);
-        } else {
-            setLanguage('en');
+        if (['ko', 'ja'].includes(browserLang)) setLanguage(browserLang);
+        else if (browserLang !== 'ko') setLanguage('en');
+
+        // Nav scroll
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Forms
+        function handleForm(formId, btnId, successId) {
+            const form = document.getElementById(formId);
+            const btn = document.getElementById(btnId);
+            const success = document.getElementById(successId);
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = form.querySelector('input').value;
+
+                btn.classList.add('btn-loading');
+                btn.disabled = true;
+
+                await new Promise(r => setTimeout(r, 1500));
+
+                const list = JSON.parse(localStorage.getItem('matchhz_waitlist') || '[]');
+                list.push({ email, ts: new Date().toISOString(), lang: document.documentElement.lang });
+                localStorage.setItem('matchhz_waitlist', JSON.stringify(list));
+
+                form.classList.add('hidden');
+                success.classList.add('show');
+
+                console.log('Registered:', email);
+            });
         }
 
-        // Form submission
-        const form = document.getElementById('waitlistForm');
-        const formWrapper = document.getElementById('formWrapper');
-        const submitBtn = document.getElementById('submitBtn');
-        const successState = document.getElementById('successState');
+        handleForm('heroForm', 'heroBtn', 'heroSuccess');
+        handleForm('ctaForm', 'ctaBtn', 'ctaSuccess');
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = emailInput.value;
-            const originalContent = submitBtn.innerHTML;
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="loading"></span>';
-            
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Store email
-            const waitlist = JSON.parse(localStorage.getItem('matchhz_waitlist') || '[]');
-            waitlist.push({ 
-                email, 
-                timestamp: new Date().toISOString(),
-                lang: document.documentElement.lang 
-            });
-            localStorage.setItem('matchhz_waitlist', JSON.stringify(waitlist));
-            
-            formWrapper.classList.add('submitted');
-            successState.classList.add('show');
-            
-            console.log('Registered:', email);
-        });
+        function scrollToForm() {
+            document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+        }
 
-        // Smooth reveal animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const fadeInObserver = new IntersectionObserver((entries) => {
+        // Animate on scroll
+        const animateEls = document.querySelectorAll('.step-card, .feature-row, .testimonial-card, .stat-item');
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.feature-card, .stat-item').forEach(el => {
+        animateEls.forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            fadeInObserver.observe(el);
+            observer.observe(el);
         });
     </script>
 </body>
