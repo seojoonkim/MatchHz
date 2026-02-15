@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchHz — Your frequency, perfectly matched</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-2: #141414;
+            --text: #ffffff;
+            --text-dim: #666666;
+            --accent: #ff3366;
+            --accent-2: #6633ff;
+            --gradient: linear-gradient(135deg, #ff3366 0%, #6633ff 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', 'Noto Sans JP', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Noise texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .logo span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.25rem;
+            background: var(--surface-2);
+            padding: 0.25rem;
+            border-radius: 8px;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .lang-btn.active {
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: var(--text);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 6rem 2rem;
+            position: relative;
+            text-align: center;
+        }
+
+        /* Animated gradient orbs */
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 51, 102, 0.15) 0%, transparent 70%);
+            top: 10%;
+            left: 10%;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(102, 51, 255, 0.15) 0%, transparent 70%);
+            bottom: 10%;
+            right: 10%;
+            animation: pulse 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--surface-2);
+            border: 1px solid #222;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .headline {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+        }
+
+        .headline .gradient {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subheadline {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            color: var(--text-dim);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        /* Form */
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .input-row {
+            display: flex;
+            width: 100%;
+            background: var(--surface);
+            border: 1px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-row:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(255, 51, 102, 0.1);
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 1.25rem 1.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            outline: none;
+        }
+
+        .email-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .submit-btn {
+            padding: 1.25rem 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            font-family: inherit;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .form-note {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* Success */
+        .success-state {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid #222;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .success-state.show {
+            display: flex;
+        }
+
+        .success-state svg {
+            width: 48px;
+            height: 48px;
+            color: #00ff88;
+        }
+
+        .success-state p {
+            color: var(--text-dim);
+            text-align: center;
+        }
+
+        .form-wrapper.submitted .input-row,
+        .form-wrapper.submitted .form-note {
+            display: none;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Features */
+        .features {
+            padding: 8rem 2rem;
+            background: var(--surface);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 3rem 2rem;
+            background: var(--bg);
+            border: 1px solid #1a1a1a;
+            border-radius: 24px;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: #333;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* Stats */
+        .stats {
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .stat-item {
+            padding: 2rem;
+        }
+
+        .stat-value {
+            font-size: 4rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 8rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(255, 51, 102, 0.1) 0%, transparent 70%);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .cta-sub {
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid #111;
+        }
+
+        footer p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .features-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .input-row {
+                flex-direction: column;
+                border-radius: 12px;
+            }
+
+            .submit-btn {
+                border-radius: 0 0 12px 12px;
+            }
+
+            .email-input {
+                text-align: center;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hide elements by language */
+        [data-lang] { display: none; }
+        [data-lang].active { display: block; }
+        span[data-lang].active { display: inline; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Match<span>Hz</span></div>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang-btn="ko">한국어</button>
+            <button class="lang-btn" data-lang-btn="ja">日本語</button>
+            <button class="lang-btn" data-lang-btn="en">EN</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">
+                <span data-lang="ko" class="active">2028년 출시 예정</span>
+                <span data-lang="ja">2028年リリース予定</span>
+                <span data-lang="en">Coming 2028</span>
+            </div>
+            
+            <h1 class="headline">
+                <span data-lang="ko" class="active">
+                    당신보다<br>
+                    <span class="gradient">당신을</span> 더 잘 아는<br>
+                    에이전트
+                </span>
+                <span data-lang="ja">
+                    あなたより<br>
+                    <span class="gradient">あなたを</span>知る<br>
+                    エージェント
+                </span>
+                <span data-lang="en">
+                    An agent that<br>
+                    knows <span class="gradient">you</span><br>
+                    better than you
+                </span>
+            </h1>
+
+            <p class="subheadline">
+                <span data-lang="ko" class="active">
+                    완벽한 타이밍. 완벽한 대화. 완벽한 주파수.<br>
+                    에이전트가 당신의 이상형을 찾아냅니다.
+                </span>
+                <span data-lang="ja">
+                    完璧なタイミング。完璧な会話。完璧な周波数。<br>
+                    エージェントがあなたの理想を見つけます。
+                </span>
+                <span data-lang="en">
+                    Perfect timing. Perfect conversation. Perfect frequency.<br>
+                    Your agent finds your perfect match.
+                </span>
+            </p>
+
+            <div class="form-wrapper" id="formWrapper">
+                <form class="input-row" id="waitlistForm">
+                    <input 
+                        type="email" 
+                        class="email-input" 
+                        required
+                        id="emailInput"
+                    >
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span data-lang="ko" class="active">얼리 액세스</span>
+                        <span data-lang="ja">早期アクセス</span>
+                        <span data-lang="en">Early Access</span>
+                    </button>
+                </form>
+                <p class="form-note">
+                    <span data-lang="ko" class="active">스팸 없음 · 출시 시 알림</span>
+                    <span data-lang="ja">スパムなし · リリース時に通知</span>
+                    <span data-lang="en">No spam · Notify on launch</span>
+                </p>
+                <div class="success-state" id="successState">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    <p>
+                        <span data-lang="ko" class="active">등록 완료. 주파수가 맞으면 연락드리겠습니다.</span>
+                        <span data-lang="ja">登録完了。周波数が合えばご連絡します。</span>
+                        <span data-lang="en">Registered. We'll reach out when our frequencies align.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span data-lang="ko" class="active">스크롤</span>
+            <span data-lang="ja">スクロール</span>
+            <span data-lang="en">Scroll</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">
+                    <span data-lang="ko" class="active">실시간 코칭</span>
+                    <span data-lang="ja">リアルタイムコーチング</span>
+                    <span data-lang="en">Real-time Coaching</span>
+                </h3>
+                <p class="feature-desc">
+                    <span data-lang="ko" class="active">
+                        대화가 정체될 때, 에이전트가 최적의 화제를 제안합니다.<br>
+                        미소 2.5초. 끄덕임. 완벽한 타이밍.
+                    </span>
+                    <span data-lang="ja">
+                        会話が停滞したとき、エージェントが最適な話題を提案。<br>
+                        微笑み2.5秒。うなずき。完璧なタイミング。
+                    </span>
+                    <span data-lang="en">
+                        When conversation stalls, your agent suggests the perfect topic.<br>
+                        2.5 second smile. Nod. Perfect timing.
+                    </span>
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">
+                    <span data-lang="ko" class="active">대리 데이트</span>
+                    <span data-lang="ja">代理デート</span>
+                    <span data-lang="en">Proxy Dating</span>
+                </h3>
+                <p class="feature-desc">
+                    <span data-lang="ko" class="active">
+                        바쁜 당신을 위해 에이전트가 대신 만납니다.<br>
+                        당신의 얼굴, 당신의 목소리, 더 나은 당신.
+                    </span>
+                    <span data-lang="ja">
+                        忙しいあなたの代わりにエージェントが会います。<br>
+                        あなたの顔、あなたの声、より良いあなた。
+                    </span>
+                    <span data-lang="en">
+                        Too busy? Your agent meets them instead.<br>
+                        Your face, your voice, a better you.
+                    </span>
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💫</div>
+                <h3 class="feature-title">
+                    <span data-lang="ko" class="active">VR 동기화</span>
+                    <span data-lang="ja">VR同期</span>
+                    <span data-lang="en">VR Sync</span>
+                </h3>
+                <p class="feature-desc">
+                    <span data-lang="ko" class="active">
+                        물리적 거리는 문제가 아닙니다.<br>
+                        헤드셋을 쓰세요. 나머지는 에이전트가.
+                    </span>
+                    <span data-lang="ja">
+                        物理的な距離は問題ではありません。<br>
+                        ヘッドセットを。残りはエージェントが。
+                    </span>
+                    <span data-lang="en">
+                        Physical distance is not a problem.<br>
+                        Put on the headset. Agent handles the rest.
+                    </span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value">92%</div>
+                <div class="stat-label">
+                    <span data-lang="ko" class="active">평균 적합도</span>
+                    <span data-lang="ja">平均適合度</span>
+                    <span data-lang="en">Avg Match Rate</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">387</div>
+                <div class="stat-label">
+                    <span data-lang="ko" class="active">상호 탐색</span>
+                    <span data-lang="ja">相互探索</span>
+                    <span data-lang="en">Cross Searches</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">2.5s</div>
+                <div class="stat-label">
+                    <span data-lang="ko" class="active">최적 반응 시간</span>
+                    <span data-lang="ja">最適反応時間</span>
+                    <span data-lang="en">Optimal Response</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-content">
+            <h2 class="cta-title">
+                <span data-lang="ko" class="active">당신의 주파수를 찾을 준비가 됐나요?</span>
+                <span data-lang="ja">あなたの周波数を見つける準備はできましたか？</span>
+                <span data-lang="en">Ready to find your frequency?</span>
+            </h2>
+            <p class="cta-sub">
+                <span data-lang="ko" class="active">2028년, 연애의 새로운 패러다임</span>
+                <span data-lang="ja">2028年、恋愛の新しいパラダイム</span>
+                <span data-lang="en">2028. A new paradigm in dating.</span>
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2028 MatchHz Inc. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Language switching
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const langElements = document.querySelectorAll('[data-lang]');
+        const emailInput = document.getElementById('emailInput');
+
+        const placeholders = {
+            ko: '이메일 주소를 입력하세요',
+            ja: 'メールアドレスを入力',
+            en: 'Enter your email'
+        };
+
+        function setLanguage(lang) {
+            langBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.langBtn === lang);
+            });
+            
+            langElements.forEach(el => {
+                el.classList.toggle('active', el.dataset.lang === lang);
+            });
+
+            emailInput.placeholder = placeholders[lang];
+            document.documentElement.lang = lang;
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setLanguage(btn.dataset.langBtn);
+            });
+        });
+
+        // Detect browser language
+        const browserLang = navigator.language.slice(0, 2);
+        if (['ko', 'ja', 'en'].includes(browserLang)) {
+            setLanguage(browserLang);
+        } else {
+            setLanguage('en');
+        }
+
+        // Form submission
+        const form = document.getElementById('waitlistForm');
+        const formWrapper = document.getElementById('formWrapper');
+        const submitBtn = document.getElementById('submitBtn');
+        const successState = document.getElementById('successState');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = emailInput.value;
+            const originalContent = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading"></span>';
+            
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Store email
+            const waitlist = JSON.parse(localStorage.getItem('matchhz_waitlist') || '[]');
+            waitlist.push({ 
+                email, 
+                timestamp: new Date().toISOString(),
+                lang: document.documentElement.lang 
+            });
+            localStorage.setItem('matchhz_waitlist', JSON.stringify(waitlist));
+            
+            formWrapper.classList.add('submitted');
+            successState.classList.add('show');
+            
+            console.log('Registered:', email);
+        });
+
+        // Smooth reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const fadeInObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            fadeInObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
