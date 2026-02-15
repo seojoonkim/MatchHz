@@ -394,36 +394,44 @@
         }
 
         .problem-card {
-            padding: 32px;
-            background: var(--bg);
+            padding: 32px 32px 32px 40px;
+            background: var(--white);
             border-radius: var(--radius);
-            border: 1px solid transparent;
+            border: 1px solid var(--bg-alt);
             transition: all 0.3s;
+            position: relative;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 24px;
+            bottom: 24px;
+            width: 3px;
+            background: var(--gradient);
+            border-radius: 2px;
         }
 
         .problem-card:hover {
-            background: var(--white);
-            border-color: var(--bg-alt);
+            border-color: transparent;
             box-shadow: var(--shadow-lg);
             transform: translateY(-4px);
         }
 
-        .problem-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--gradient-light);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 20px;
+        .problem-number {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
         }
 
         .problem-card h3 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             margin-bottom: 12px;
+            line-height: 1.4;
         }
 
         .problem-card p {
@@ -1212,7 +1220,7 @@
             </div>
             <div class="problem-grid">
                 <div class="problem-card">
-                    <div class="problem-icon">📸</div>
+                    <div class="problem-number">01</div>
                     <h3>
                         <span data-lang="ko" class="active">사진으로 판단하는 매칭</span>
                         <span data-lang="ja">写真で判断するマッチング</span>
@@ -1225,7 +1233,7 @@
                     </p>
                 </div>
                 <div class="problem-card">
-                    <div class="problem-icon">😓</div>
+                    <div class="problem-number">02</div>
                     <h3>
                         <span data-lang="ko" class="active">끝없는 스와이프 피로</span>
                         <span data-lang="ja">終わりのないスワイプ疲れ</span>
@@ -1238,7 +1246,7 @@
                     </p>
                 </div>
                 <div class="problem-card">
-                    <div class="problem-icon">💬</div>
+                    <div class="problem-number">03</div>
                     <h3>
                         <span data-lang="ko" class="active">어색한 첫 대화</span>
                         <span data-lang="ja">ぎこちない最初の会話</span>
